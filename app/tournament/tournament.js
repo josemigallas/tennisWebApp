@@ -25,8 +25,8 @@ export class Tournament {
 
     generate() {
         this.checkNumberOfPlayers();
-        this.rounds = this.calculateRounds();
-        this.generateMatches();
+        this.generateEmptyMatches();
+        this.generateTournamentBracket();
     }
 
     checkNumberOfPlayers() {
@@ -54,29 +54,31 @@ export class Tournament {
         }
     }
 
-    calculateRounds() {
-        return Math.log2(this.players.length);
+    generateEmptyMatches() {
+        for (var i=0; i<this.totalMatches(); i++) {
+            this.matches.push(new match.Match());
+        }
     }
 
-    generateMatches() {
-        for (var i=0; i<this.players.length-1; i++){
-            this.matches[i] = new match.Match();
-        }
+    totalMatches() {
+        return this.players.length - 1;
+    }
 
-        var currentMatch = 0;
-        var currentRound = this.rounds;
+    generateTournamentBracket() {
+        var totalRounds = this.totalRounds();
 
-        while(currentRound > 1) {
-            var matchesInRound = this.rounds - currentRound + 1;
-            while (matchesInRound > 0) {
-                matchesInRound--;
-                this.matches[currentMatch].round = currentRound;
-                this.matches[currentMatch].parents[0] = this.matches[currentMatch*2+1];
-                this.matches[currentMatch].parents[1] = this.matches[currentMatch*2+2];
-                currentMatch++;
+        this.matches.forEach( function(match, i, matches) {
+            var round = totalRounds - parseInt(Math.log2(i + 1));
+            if (round > 1) {
+                match.round = round;
+                match.parents[0] = matches[i*2+1];
+                match.parents[1] = matches[i*2+2];
             }
-            currentRound--;
-        }
+        });
+    }
+
+    totalRounds() {
+        return Math.log2(this.players.length);
     }
 }
 

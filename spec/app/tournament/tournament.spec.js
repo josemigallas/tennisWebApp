@@ -68,8 +68,7 @@ describe('class Tournament', function() {
         var mTournament = new tournament.Tournament();
         mTournament.addPlayer(new player.Player("Spiderman", 1));
         mTournament.addPlayer(new player.Player("Batman", 1));
-        mTournament.generate();
-        expect(mTournament.matches.length).toEqual(1);
+        expect(mTournament.totalMatches()).toEqual(1);
     });
 
     it('generating a tournament with 4 players should create 3 matches', function() {
@@ -79,7 +78,7 @@ describe('class Tournament', function() {
         mTournament.addPlayer(new player.Player("Ironman", 1));
         mTournament.addPlayer(new player.Player("Wolverine", 1));
         mTournament.generate();
-        expect(mTournament.matches.length).toEqual(3);
+        expect(mTournament.totalMatches()).toEqual(3);
     });
 
     it('should have 3 rounds if it has 8 players', function() {
@@ -93,7 +92,7 @@ describe('class Tournament', function() {
         mTournament.addPlayer(new player.Player("Sandman", 1));
         mTournament.addPlayer(new player.Player("Hiro Nakamura", 1));
         mTournament.generate();
-        expect(mTournament.rounds).toEqual(3);
+        expect(mTournament.totalRounds()).toEqual(3);
     });
 
     it('should have a round 2 match with two round 1 parents if it has 4 players', function() {
