@@ -64,6 +64,14 @@ describe('class Tournament', function() {
         expect(mTournament.players.length).toEqual(8);
     });
 
+    it('generating a tournament with 2 players should create 1 matches', function() {
+        var mTournament = new tournament.Tournament();
+        mTournament.addPlayer(new player.Player("Spiderman", 1));
+        mTournament.addPlayer(new player.Player("Batman", 1));
+        mTournament.generate();
+        expect(mTournament.matches.length).toEqual(1);
+    });
+
     it('generating a tournament with 4 players should create 3 matches', function() {
         var mTournament = new tournament.Tournament();
         mTournament.addPlayer(new player.Player("Spiderman", 1));
@@ -72,5 +80,33 @@ describe('class Tournament', function() {
         mTournament.addPlayer(new player.Player("Wolverine", 1));
         mTournament.generate();
         expect(mTournament.matches.length).toEqual(3);
+    });
+
+    it('should have 3 rounds if it has 8 players', function() {
+        var mTournament = new tournament.Tournament();
+        mTournament.addPlayer(new player.Player("Spiderman", 1));
+        mTournament.addPlayer(new player.Player("Batman", 1));
+        mTournament.addPlayer(new player.Player("Ironman", 1));
+        mTournament.addPlayer(new player.Player("Wolverine", 1));
+        mTournament.addPlayer(new player.Player("Thor", 1));
+        mTournament.addPlayer(new player.Player("The Thing", 1));
+        mTournament.addPlayer(new player.Player("Sandman", 1));
+        mTournament.addPlayer(new player.Player("Hiro Nakamura", 1));
+        mTournament.generate();
+        expect(mTournament.rounds).toEqual(3);
+    });
+
+    it('should have a round 2 match with two round 1 parents if it has 4 players', function() {
+        var mTournament = new tournament.Tournament();
+        mTournament.addPlayer(new player.Player("Spiderman", 1));
+        mTournament.addPlayer(new player.Player("Batman", 1));
+        mTournament.addPlayer(new player.Player("Ironman", 1));
+        mTournament.addPlayer(new player.Player("Wolverine", 1));
+        mTournament.generate();
+        expect(mTournament.matches[0].round).toEqual(2);
+        expect(mTournament.matches[0].parents[0].round).toEqual(1);
+        expect(mTournament.matches[0].parents[1].round).toEqual(1);
+        expect(mTournament.matches[0].parents[0].parents.length).toEqual(0);
+        expect(mTournament.matches[0].parents[1].parents.length).toEqual(0);
     });
 });

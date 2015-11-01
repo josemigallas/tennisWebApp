@@ -1,4 +1,5 @@
 import * as player from "./player";
+import * as match from "./match";
 
 export class Tournament {
     constructor() {
@@ -24,14 +25,8 @@ export class Tournament {
 
     generate() {
         this.checkNumberOfPlayers();
-        var match = {
-            player1: "pepe",
-            player2: "maria"
-        }
-
-        for (var i=0; i<this.players.length-1; i++){
-            this.matches[i] = match;
-        }
+        this.rounds = this.calculateRounds();
+        this.generateMatches();
     }
 
     checkNumberOfPlayers() {
@@ -56,6 +51,31 @@ export class Tournament {
         var i = 1;
         while (this.players.length < goodNumber) {
             this.addPlayer(new player.Player(`Ghost${i++}`, 1));
+        }
+    }
+
+    calculateRounds() {
+        return Math.log2(this.players.length);
+    }
+
+    generateMatches() {
+        for (var i=0; i<this.players.length-1; i++){
+            this.matches[i] = new match.Match();
+        }
+
+        var currentMatch = 0;
+        var currentRound = this.rounds;
+
+        while(currentRound > 1) {
+            var matchesInRound = this.rounds - currentRound + 1;
+            while (matchesInRound > 0) {
+                matchesInRound--;
+                this.matches[currentMatch].round = currentRound;
+                this.matches[currentMatch].parents[0] = this.matches[currentMatch*2+1];
+                this.matches[currentMatch].parents[1] = this.matches[currentMatch*2+2];
+                currentMatch++;
+            }
+            currentRound--;
         }
     }
 }
