@@ -16,3 +16,13 @@
     background-color: #fff;
     border-radius: 4px;
 }
+
+.panel-body {
+    padding: 0 7px;
+}
+
+.table thead > tr > th,
+.table tbody > tr > th,
+.table tbody > tr > td {
+    border: none;
+}
