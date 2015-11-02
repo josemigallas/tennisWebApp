@@ -121,6 +121,8 @@ describe('class Tournament', function() {
         mTournament.matches.forEach( function(match) {
             if (match.round == 1) {
                 expect(match.players.length).toEqual(2);
+            } else {
+                expect(match.players.length).toEqual(0);
             }
         });
     });
