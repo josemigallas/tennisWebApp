@@ -6,6 +6,7 @@ var mTournament = new tournament.Tournament();
 
 $(document).ready(function() {
     $("#buttonAdd").click(addPlayerIfValid);
+    $("#buttonCreate").click(generateTournament);
 });
 
 function addPlayerIfValid() {
@@ -43,3 +44,18 @@ function addPlayerToTable(player) {
 }
 
 var newRow = (player) => `<tr><td>${player.name.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</td><td>${player.rank}</td></tr>`;
+
+function generateTournament() {
+    try {
+        mTournament.generate();
+        closeEnrollment();
+
+    } catch (e) {
+        window.alert("Too few players!");
+    }
+}
+
+function closeEnrollment() {
+    $("#buttonAdd").off();
+    $("#buttonCreate").off();
+}
