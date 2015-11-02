@@ -1,5 +1,6 @@
 import * as player from "./player";
 import * as match from "./match";
+import * as utils from "../common/utils";
 
 export class Tournament {
     constructor() {
