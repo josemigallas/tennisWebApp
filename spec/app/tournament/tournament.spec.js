@@ -108,4 +108,20 @@ describe('class Tournament', function() {
         expect(mTournament.matches[0].parents[0].parents.length).toEqual(0);
         expect(mTournament.matches[0].parents[1].parents.length).toEqual(0);
     });
+
+    it('should pair up players in all round 1 matches', function() {
+        var mTournament = new tournament.Tournament();
+        mTournament.addPlayer(new player.Player("Spiderman", 1));
+        mTournament.addPlayer(new player.Player("Batman", 1));
+        mTournament.addPlayer(new player.Player("Ironman", 1));
+        mTournament.addPlayer(new player.Player("Wolverine", 1));
+        mTournament.addPlayer(new player.Player("Thor", 1));
+        mTournament.addPlayer(new player.Player("The Thing", 1));
+        mTournament.generate();
+        mTournament.matches.forEach( function(match) {
+            if (match.round == 1) {
+                expect(match.players.length).toEqual(2);
+            }
+        });
+    });
 });

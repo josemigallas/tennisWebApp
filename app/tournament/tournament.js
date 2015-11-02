@@ -28,6 +28,7 @@ export class Tournament {
         this.checkNumberOfPlayers();
         this.generateEmptyMatches();
         this.generateTournamentBracket();
+        this.pairUpPlayers();
     }
 
     checkNumberOfPlayers() {
@@ -80,6 +81,16 @@ export class Tournament {
 
     totalRounds() {
         return Math.log2(this.players.length);
+    }
+
+    pairUpPlayers() {
+        var playersCopy = this.players.slice();
+        for (var match of this.matches) {
+            if (match.round == 1) {
+                match.addPlayer(utils.spliceItemRandomly(playersCopy));
+                match.addPlayer(utils.spliceItemRandomly(playersCopy));
+            }
+        }
     }
 }
 
