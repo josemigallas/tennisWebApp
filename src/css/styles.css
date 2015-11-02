@@ -6,3 +6,13 @@
 .navbar-brand {
     height: 100%;
 }
+
+.btn-expand {
+    width: 100%;
+}
+
+.panel-custom {
+    margin-bottom: 20px;
+    background-color: #fff;
+    border-radius: 4px;
+}

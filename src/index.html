@@ -10,37 +10,43 @@
     <!-- header -->
     <header>
         <nav class="navbar navbar-default">
-            <div class="container-fluid">
+            <div class="container-fluid hidden-xs">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="">
                         <img alt="Brand" class="logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Tennis_ball_3.svg/480px-Tennis_ball_3.svg.png">
                     </a>
                 </div>
-                <h1>tennisWebApp <small> Empowered Gromenawer Achipriklander</small></h1>
+                <h1>tennisWebApp<small> Empowered Gromenawer Achipriklander</small></h1>
+            </div>
+            <div class="container-fluid hidden-sm hidden-md hidden-lg">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="">
+                        <img alt="Brand" class="logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Tennis_ball_3.svg/480px-Tennis_ball_3.svg.png">
+                    </a>
+                    <h1>tennisWebApp</h1>
+                </div>
             </div>
         </nav>
     </header>
     <!-- /header -->
 
-    <div class="container">
+    <div class="container-fluid">
 
         <!-- registration table -->
-        <div class="col-md-6">
+        <div class="col-md-offset-2 col-md-8 col-lg-offset-0 col-lg-4">
 
             <!-- new player row -->
-            <div class="panel">
                 <div class="row">
-                    <div class="col-xs-6">
+                    <div class="col-xs-12 col-sm-6  col-lg-7 panel-custom">
                         <input type="text" class="form-control" placeholder="Player Name" id="fieldName">
                     </div>
-                    <div class="col-xs-3">
+                    <div class="col-xs-5 col-sm-3 col-lg-3 panel-custom">
                         <input type="number" class="form-control" placeholder="Rank" min="0" id="fieldRank">
                     </div>
-                    <div class="col-xs-3">
+                    <div class="col-xs-offset-4 col-xs-3 col-sm-offset-0 col-sm-3 col-lg-2 panel-custom">
                         <button class="btn btn-default" type="button" id="buttonAdd" style="width: 100%">Add</button>
                     </div>
                 </div>
-            </div>
 
             <!-- player list row -->
             <div class="row">
@@ -48,7 +54,7 @@
                 <div class="col-xs-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Players enroled</h3>
+                            <h3 class="panel-title">Player list</h3>
                         </div>
                         <div class="panel-body" id="playerListBody">
                         </div>
@@ -59,11 +65,21 @@
             <!-- button row -->
             <div class="row">
                 <div class="col-sm-offset-6 col-sm-6">
-                    <button class="btn btn-default" type="button" id="buttonCreate" style="width: 100%">Create tournament</button>
+                    <div class="panel-custom">
+                        <button class="btn btn-default btn-expand" type="button" id="buttonCreate">Create tournament</button>
+                    </div>
                 </div>
             </div>
         </div>
         <!-- /registration table -->
+
+        <!-- tournament bracket -->
+        <div class="col-md-12 col-lg-8">
+            <div class="panel panel-default">
+                Tournament bracket
+            </div>
+        </div>
+        <!-- /tournament bracket -->
     </div>
 
 </body>
