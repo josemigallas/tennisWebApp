@@ -126,4 +126,20 @@ describe('class Tournament', function() {
             }
         });
     });
+
+    it('should have every round 1 match two players after generating', function() {
+        var mTournament = new tournament.Tournament();
+        mTournament.addPlayer(new player.Player("Spiderman", 1));
+        mTournament.addPlayer(new player.Player("Batman", 1));
+        mTournament.addPlayer(new player.Player("Ironman", 1));
+        mTournament.addPlayer(new player.Player("Wolverine", 1));
+        mTournament.addPlayer(new player.Player("Thor", 1));
+        mTournament.addPlayer(new player.Player("The Thing", 1));
+        mTournament.generate();
+        mTournament.matches.forEach( function(match) {
+            if (match.round == 1) {
+                expect(match.players[0] instanceof player.Player).toBe(true);
+            }
+        });
+    });
 });
