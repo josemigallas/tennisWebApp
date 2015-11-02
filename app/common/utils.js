@@ -1,5 +1,5 @@
 export function spliceItemRandomly(array) {
-    return array.splice(getRandomInt(0, array.length), 1);
+    return array.splice(getRandomInt(0, array.length), 1)[0];
 }
 
 export function getRandomInt(min, max) {
