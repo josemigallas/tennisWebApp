@@ -1,8 +1,8 @@
 import $ from "jquery";
-import * as tournament from "./tournament";
-import * as player from "./player";
+import {Tournament} from "./tournament";
+import {Player} from "./player";
 
-var mTournament = new tournament.Tournament();
+var tournament = new Tournament();
 
 export function init() {
     $("#buttonAdd").click(addPlayerIfValid);
@@ -13,9 +13,9 @@ function addPlayerIfValid() {
     var info = getPlayerInfo();
 
     try {
-        var newPlayer = new player.Player(info.name, info.rank);
-        mTournament.addPlayer(newPlayer);
-        updateTable(newPlayer);
+        var player = new Player(info.name, info.rank);
+        tournament.addPlayer(player);
+        updateTable(player);
 
     } catch (e) {
         window.alert("Not a valid player");
@@ -40,14 +40,16 @@ function clearFields() {
 }
 
 function addPlayerToTable(player) {
-    $("#playerListBody").append(newRow(player));
+    $("#playerListBody").append(composeHTMLTableRowForPlayer(player));
 }
 
-var newRow = (player) => `<tr><td>${player.name.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</td><td>${player.rank}</td></tr>`;
+var composeHTMLTableRowForPlayer = function(player) {
+    return `<tr><td>${player.name.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</td><td>${player.rank}</td></tr>`;
+}
 
 function generateTournament() {
     try {
-        mTournament.generate();
+        tournament.generate();
         closeEnrollment();
 
     } catch (e) {
