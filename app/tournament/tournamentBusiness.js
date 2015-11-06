@@ -44,7 +44,7 @@ function addPlayerToHTMLTable(player) {
 }
 
 function generateTournament() {
-    if (tournament.players > 1) {
+    if (tournament.players.length > 1) {
         tournament.generate();
         closeEnrollment();
 
