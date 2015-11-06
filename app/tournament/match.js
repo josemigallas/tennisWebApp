@@ -11,4 +11,11 @@ export class Match {
         }
         this.players.push(player);
     }
+
+    addParent(match) {
+        if (this.parents.length >= 2) {
+            throw new Error("Match has already 2 parents");
+        }
+        this.parents.push(match);
+    }
 }
