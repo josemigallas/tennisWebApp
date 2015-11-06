@@ -1,6 +1,5 @@
 import $ from "jquery";
 import {Tournament} from "./tournament";
-import {Player} from "./player";
 
 var tournament = new Tournament();
 
@@ -10,49 +9,46 @@ export function init() {
 }
 
 function addPlayerIfValid() {
-    var info = getPlayerInfo();
+    var player = getPlayerDataFromForms();
+    var validationResult = tournament.validatePlayer(player);
 
-    try {
-        var player = new Player(info.name, info.rank);
+    if (validationResult.success) {
         tournament.addPlayer(player);
         updateTable(player);
-
-    } catch (e) {
-        window.alert("Not a valid player");
+    } else {
+        window.alert(validationResult.error);
     }
 }
 
-function getPlayerInfo() {
+function getPlayerDataFromForms() {
     return {
-        name: $("#fieldName")[0].value,
-        rank: $("#fieldRank")[0].value
-    }
+        name: $("#fieldName").val(),
+        rank: $("#fieldRank").val()
+    };
 }
 
 function updateTable(player) {
     clearFields();
-    addPlayerToTable(player);
+    addPlayerToHTMLTable(player);
 }
 
 function clearFields() {
-    $("#fieldName")[0].value = "";
-    $("#fieldRank")[0].value = "";
+    $("#fieldName").val("");
+    $("#fieldRank").val("");
 }
 
-function addPlayerToTable(player) {
-    $("#playerListBody").append(composeHTMLTableRowForPlayer(player));
-}
-
-var composeHTMLTableRowForPlayer = function(player) {
-    return `<tr><td>${player.name.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</td><td>${player.rank}</td></tr>`;
+function addPlayerToHTMLTable(player) {
+    $("#playerListBody").append(
+        `<tr><td>${player.name.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</td><td>${player.rank}</td></tr>`
+    );
 }
 
 function generateTournament() {
-    try {
+    if (tournament.players > 1) {
         tournament.generate();
         closeEnrollment();
 
-    } catch (e) {
+    } else {
         window.alert("Too few players!");
     }
 }

@@ -1,4 +1,4 @@
-import * as player from "./player";
+import * as playerValidator from "./playerValidator";
 import * as match from "./match";
 import * as utils from "../common/utils";
 
@@ -9,13 +9,10 @@ export class Tournament {
     }
 
     addPlayer(player) {
-        if (this.existsAlready(player)) {
-            throw new TournamentError(`Duplicate player: "${player.name}".`);
-        }
         this.players.push(player);
     }
 
-    existsAlready(player) {
+    isPlayerEnrolled(player) {
         for (var p of this.players) {
             if (p.name.toLowerCase() === player.name.toLowerCase()) {
                 return true;
@@ -92,10 +89,22 @@ export class Tournament {
             }
         }
     }
+
+    validatePlayer(player) {
+        var validationResult = playerValidator.validate(player);
+
+        if (validationResult.success && this.isPlayerEnrolled(player)) {
+            validationResult.error += "Player already enrolled";
+            validationResult.success = false;
+        }
+
+        return validationResult;
+    }
 }
 
-export class TournamentError extends Error {
-    constructor(msg) {
-        super(msg);
+export class Player {
+    constructor(name, rank) {
+        this.name = name;
+        this.rank = rank;
     }
 }
