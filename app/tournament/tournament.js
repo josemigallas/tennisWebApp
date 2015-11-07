@@ -1,4 +1,4 @@
-import * as playerValidator from "./playerValidator";
+import {Player, validatePlayer} from "./player";
 import * as match from "./match";
 import * as utils from "../common/utils";
 
@@ -9,30 +9,18 @@ export class Tournament {
     }
 
     addPlayer(player) {
-        this.players.push(player);
-    }
-
-    isPlayerEnrolled(player) {
-        for (var p of this.players) {
-            if (p.name.toLowerCase() === player.name.toLowerCase()) {
-                return true;
-            }
-        };
-        return false;
+        this.players.push(new Player(player.name, player.rank));
     }
 
     generate() {
-        this.checkNumberOfPlayers();
+        this.fillUpWithGhostIfNeeded();
         this.generateEmptyMatches();
         this.generateTournamentBracket();
         this.pairUpPlayers();
     }
 
-    checkNumberOfPlayers() {
-        if (!this.enaughPlayers()) {
-            throw new TournamentError(`Too few players: ${this.players.length}`);
-        }
-        if (!this.hasProperNumberOfPlayers()){
+    fillUpWithGhostIfNeeded() {
+        if (this.needGhostPlayers()){
             this.fillUpWithGhosts();
         }
     }
@@ -41,15 +29,15 @@ export class Tournament {
         return this.players.length >= 2;
     }
 
-    hasProperNumberOfPlayers() {
-        return Number.isInteger(Math.log2(this.players.length));
+    needGhostPlayers() {
+        return !Number.isInteger(Math.log2(this.players.length));
     }
 
     fillUpWithGhosts() {
         var goodNumber = parseInt(Math.pow(10, this.players.length.toString(2).length), 2);
         var i = 1;
         while (this.players.length < goodNumber) {
-            this.addPlayer(new player.Player(`Ghost${i++}`, 1));
+            this.addPlayer(new Player(`Ghost${i++}`, 1));
         }
     }
 
@@ -91,20 +79,17 @@ export class Tournament {
     }
 
     validatePlayer(player) {
-        var validationResult = playerValidator.validate(player);
+        var validationResult = validatePlayer(player);
 
-        if (validationResult.success && this.isPlayerEnrolled(player)) {
+        if (validationResult.success && this.players.find(this.isEnrolled, player)) {
             validationResult.error += "Player already enrolled";
             validationResult.success = false;
         }
 
         return validationResult;
     }
-}
 
-export class Player {
-    constructor(name, rank) {
-        this.name = name;
-        this.rank = rank;
+    isEnrolled(player) {
+        return player.name.toLowerCase() === this.name.toLowerCase();
     }
 }

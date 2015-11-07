@@ -1,4 +1,11 @@
-export function validate(data) {
+export class Player {
+    constructor(name, rank) {
+        this.name = name;
+        this.rank = rank;
+    }
+}
+
+export function validatePlayer(data) {
     var validationResult = {};
 
     validationResult.error = validateName(data.name) + validateRank(data.rank);
@@ -12,5 +19,5 @@ function validateName(name) {
 }
 
 function validateRank(rank) {
-    return (rank < 1) ? `Rank has to be greater than 0.` : "";
+    return (rank < 1) ? "Rank has to be greater than 0." : "";
 }
