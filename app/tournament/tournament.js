@@ -24,7 +24,7 @@ export class Tournament {
         var validationResult = validatePlayer(player);
 
         if (validationResult.success && this.existsPlayer(player)) {
-            validationResult.error += "Player already enrolled";
+            validationResult.error = "Player already enrolled";
             validationResult.success = false;
         }
 
@@ -34,22 +34,42 @@ export class Tournament {
     existsPlayer(player) {
         return this.players.find(function() {
             return player.name.toLowerCase() === this.name.toLowerCase()
-                || player.rank === this.rank;
+            || player.rank === this.rank;
         }, player);
     }
 }
 
 function generateTournamentBracket(tournament) {
+    generateFirstRoundMatches(tournament);
+    generateRestOfMatches(tournament);
+}
+
+function generateFirstRoundMatches(tournament) {
+    sortPlayersByRank(tournament);
+
+    var oddPlayers = tournament.players.length % 2;
+
+    if (oddPlayers) {
+        bestPlayerDoesntPlayFirstRound(tournament);
+    }
+
+    pairUpGoodWithBadPlayersRandomly(tournament);
+}
+
+function sortPlayersByRank(tournament) {
     tournament.players.sort( function(p1, p2) {
         return p1.rank - p2.rank;
     });
+}
 
+function bestPlayerDoesntPlayFirstRound(tournament) {
+    var match = new Match(1);
+    match.addPlayer(tournament.players[0]);
+    tournament.addMatch(match);
+}
+
+function pairUpGoodWithBadPlayersRandomly(tournament) {
     var oddPlayers = tournament.players.length % 2;
-    if (oddPlayers) {
-        var match = new Match(1);
-        match.addPlayer(tournament.players[0]);
-        tournament.addMatch(match);
-    }
 
     var bestPlayers = tournament.players.slice(oddPlayers, tournament.players.length / 2 + oddPlayers);
     var worstPlayers = tournament.players.slice(tournament.players.length / 2);
@@ -60,7 +80,9 @@ function generateTournamentBracket(tournament) {
         match.addPlayer(utils.spliceItemRandomly(worstPlayers));
         tournament.addMatch(match);
     }
+}
 
+function generateRestOfMatches(tournament) {
     for (var i = 0; i < tournament.matches.length - 1; i += 2) {
         tournament.addMatch(new ChildMatch(
             tournament.matches[i],
