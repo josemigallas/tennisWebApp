@@ -37,6 +37,20 @@ describe('class Tournament', function() {
         expect( validationResult.success ).toBe(false);
     });
 
+    it('should not return any validation error when validating a player who is not yet enrolled', function() {
+        tournament.addPlayer(spiderman);
+        var validationResult = tournament.validatePlayer(batman);
+
+        expect( validationResult.error ).toEqual("");
+    });
+
+    it('should return a successful validation when validating a player who is not yet enrolled', function() {
+        tournament.addPlayer(spiderman);
+        var validationResult = tournament.validatePlayer(batman);
+
+        expect( validationResult.success ).toBe(true);
+    });
+
     it('should create 1 match generating with 2 players', function() {
         tournament.addPlayer(spiderman);
         tournament.addPlayer(batman);
