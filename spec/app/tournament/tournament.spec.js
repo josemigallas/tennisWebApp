@@ -10,6 +10,10 @@ describe('class Tournament', function() {
         tournament = new Tournament();
     });
 
+    it('should return false when checking a non-enrolled player', () => {
+        expect( tournament.existsPlayer(player) ).toBeUndefined();
+    });
+
     it('should return a validation error when validating a player who is already enrolled', function() {
         tournament.addPlayer(player);
         var validationResult = tournament.validatePlayer(player);

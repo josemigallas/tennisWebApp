@@ -26,7 +26,7 @@ export class Tournament {
     validatePlayer(player) {
         var validationResult = validatePlayer(player);
 
-        if (validationResult.success && this.players.find(this.isEnrolled, player)) {
+        if (validationResult.success && this.existsPlayer(player)) {
             validationResult.error += "Player already enrolled";
             validationResult.success = false;
         }
@@ -34,8 +34,10 @@ export class Tournament {
         return validationResult;
     }
 
-    isEnrolled(player) {
-        return player.name.toLowerCase() === this.name.toLowerCase();
+    existsPlayer(player) {
+        return this.players.find(function() {
+            return player.name.toLowerCase() === this.name.toLowerCase();
+        }, player);
     }
 }
 
