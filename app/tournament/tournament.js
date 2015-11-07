@@ -1,5 +1,5 @@
 import {Player, validatePlayer} from "./player";
-import * as match from "./match";
+import {Match} from "./match";
 import * as utils from "../common/utils";
 
 export class Tournament {
@@ -58,7 +58,7 @@ function fillUpWithGhosts(tournament) {
 function generateEmptyMatches(tournament) {
     var totalMatches = calculateTotalMatches(tournament);
     for (var i=0; i<totalMatches; i++) {
-        tournament.matches.push(new match.Match());
+        tournament.matches.push(new Match());
     }
 }
 
