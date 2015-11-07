@@ -51,9 +51,7 @@ function fillUpWithGhosts(tournament) {
     var totalPlayers = tournament.players.length;
     var nextPowerOfTwo = utils.findNextHigherPowerOfTwo(totalPlayers);
 
-    for (var i = totalPlayers; i < nextPowerOfTwo; i++) {
-        tournament.addPlayer(new Player(`Ghost${i}`, 1));
-    }
+    tournament.players.length = nextPowerOfTwo;
 }
 
 function generateEmptyMatches(tournament) {
