@@ -1,5 +1,5 @@
 import {Player, validatePlayer} from "./player";
-import {Match} from "./match";
+import {Match, ChildMatch} from "./match";
 import * as utils from "../common/utils";
 
 export class Tournament {
@@ -12,11 +12,12 @@ export class Tournament {
         this.players.push(new Player(player.name, player.rank));
     }
 
+    addMatch(match) {
+        this.matches.push(match);
+    }
+
     generate() {
-        fillUpWithGhostIfNeeded(this);
-        generateEmptyMatches(this);
         generateTournamentBracket(this);
-        pairUpPlayers(this);
     }
 
     validatePlayer(player) {
@@ -38,57 +39,32 @@ export class Tournament {
     }
 }
 
-function fillUpWithGhostIfNeeded(tournament) {
-    if (needGhostPlayers(tournament)) {
-        fillUpWithGhosts(tournament);
-    }
-}
-
-function needGhostPlayers(tournament) {
-    return !utils.isPowerOfTwo(tournament.players.length);
-}
-
-function fillUpWithGhosts(tournament) {
-    var totalPlayers = tournament.players.length;
-    var nextPowerOfTwo = utils.findNextHigherPowerOfTwo(totalPlayers);
-
-    tournament.players.length = nextPowerOfTwo;
-}
-
-function generateEmptyMatches(tournament) {
-    var totalMatches = calculateTotalMatches(tournament);
-    for (var i=0; i<totalMatches; i++) {
-        tournament.matches.push(new Match());
-    }
-}
-
-function calculateTotalMatches(tournament) {
-    return tournament.players.length - 1;
-}
-
 function generateTournamentBracket(tournament) {
-    var totalRounds = calculateTotalRounds(tournament);
-
-    tournament.matches.forEach( function(match, i, matches) {
-        var round = totalRounds - parseInt(Math.log2(i + 1));
-        if (round > 1) {
-            match.round = round;
-            match.parents[0] = matches[i*2+1];
-            match.parents[1] = matches[i*2+2];
-        }
+    tournament.players.sort( function(p1, p2) {
+        return p1.rank - p2.rank;
     });
-}
 
-function calculateTotalRounds(tournament) {
-    return Math.log2(tournament.players.length);
-}
+    var oddPlayers = tournament.players.length % 2;
+    if (oddPlayers) {
+        var match = new Match(1);
+        match.addPlayer(tournament.players[0]);
+        tournament.addMatch(match);
+    }
 
-function pairUpPlayers(tournament) {
-    var playersCopy = tournament.players.slice();
-    for (var match of tournament.matches) {
-        if (match.round == 1) {
-            match.addPlayer(utils.spliceItemRandomly(playersCopy));
-            match.addPlayer(utils.spliceItemRandomly(playersCopy));
-        }
+    var bestPlayers = tournament.players.slice(oddPlayers, tournament.players.length / 2 + oddPlayers);
+    var worstPlayers = tournament.players.slice(tournament.players.length / 2);
+
+    while (bestPlayers.length) {
+        var match = new Match(1);
+        match.addPlayer(utils.spliceItemRandomly(bestPlayers));
+        match.addPlayer(utils.spliceItemRandomly(worstPlayers));
+        tournament.addMatch(match);
+    }
+
+    for (var i = 0; i < tournament.matches.length - 1; i += 2) {
+        tournament.addMatch(new ChildMatch(
+            tournament.matches[i],
+            tournament.matches[i+1]
+        ));
     }
 }

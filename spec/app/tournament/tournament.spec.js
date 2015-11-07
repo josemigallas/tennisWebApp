@@ -10,7 +10,7 @@ describe('class Tournament', function() {
         tournament = new Tournament();
     });
 
-    it('should return false when checking a non-enrolled player', () => {
+    it('should return false when searching for a non-enrolled player', function() {
         expect( tournament.existsPlayer(player) ).toBeUndefined();
     });
 
@@ -28,42 +28,38 @@ describe('class Tournament', function() {
         expect( validationResult.success ).toBe(false);
     });
 
-    it('should add 1 ghost player generating a tournament with 3 players', function() {
-        tournament.addPlayer(player);
+    it('should create 1 match generating with 2 players', function() {
         tournament.addPlayer(player);
         tournament.addPlayer(player);
         tournament.generate();
 
-        expect( tournament.players.length ).toEqual(4);
+        expect( tournament.matches.length ).toEqual(1);
     });
 
-    it('should add 3 ghost player generating a tournament with 5 players', function() {
-        tournament.addPlayer(player);
+    it('should create 3 match generating with 4 players', function() {
         tournament.addPlayer(player);
         tournament.addPlayer(player);
         tournament.addPlayer(player);
         tournament.addPlayer(player);
         tournament.generate();
 
-        expect( tournament.players.length ).toEqual(8);
+        expect( tournament.matches.length ).toEqual(3);
     });
 
-    it('generating a tournament with 2 players should create 1 match', function() {
-        tournament.addPlayer(player);
-        tournament.addPlayer(player);
+    it('should order its players by descending rank after generating', function() {
+        tournament.addPlayer(new Player("Spiderman", 3));
+        tournament.addPlayer(new Player("Batman", 5));
+        tournament.addPlayer(new Player("The Thing", 1));
+
+        expect( tournament.players[0].rank ).toEqual(3);
+        expect( tournament.players[1].rank ).toEqual(5);
+        expect( tournament.players[2].rank ).toEqual(1);
+
         tournament.generate();
 
-        expect(tournament.matches.length).toEqual(1);
-    });
-
-    it('generating a tournament with 4 players should create 3 matches', function() {
-        tournament.addPlayer(player);
-        tournament.addPlayer(player);
-        tournament.addPlayer(player);
-        tournament.addPlayer(player);
-        tournament.generate();
-
-        expect(tournament.matches.length).toEqual(3);
+        expect( tournament.players[0].rank ).toEqual(1);
+        expect( tournament.players[1].rank ).toEqual(3);
+        expect( tournament.players[2].rank ).toEqual(5);
     });
 
     it('should have 3 rounds if it has 8 players', function() {
@@ -77,7 +73,7 @@ describe('class Tournament', function() {
         tournament.addPlayer(player);
         tournament.generate();
 
-        expect(tournament.matches[0].round).toEqual(3);
+        expect( tournament.matches.pop().round ).toEqual(3);
     });
 
     it('should have a round 2 match with two round 1 parents if it has 4 players', function() {
@@ -86,45 +82,28 @@ describe('class Tournament', function() {
         tournament.addPlayer(player);
         tournament.addPlayer(player);
         tournament.generate();
+        var lastMatch = tournament.matches.pop();
 
-        expect(tournament.matches[0].round).toEqual(2);
-        expect(tournament.matches[0].parents[0].round).toEqual(1);
-        expect(tournament.matches[0].parents[1].round).toEqual(1);
-        expect(tournament.matches[0].parents[0].parents.length).toEqual(0);
-        expect(tournament.matches[0].parents[1].parents.length).toEqual(0);
+        expect( lastMatch.round ).toEqual(2);
+        expect( lastMatch.parents[0].round ).toEqual(1);
+        expect( lastMatch.parents[1].round ).toEqual(1);
     });
 
-    it('should pair up players in all round 1 matches', function() {
-        tournament.addPlayer(player);
-        tournament.addPlayer(player);
-        tournament.addPlayer(player);
-        tournament.addPlayer(player);
-        tournament.addPlayer(player);
-        tournament.addPlayer(player);
+    it('should have a final match between Spiderman and Batman if The Thing is defeated during first round', function() {
+        var theThing = new Player("The Thing", 3);
+        var spiderman = new Player("Spiderman", 1);
+        var batman = new Player("Batman", 2);
+
+        tournament.addPlayer(theThing);
+        tournament.addPlayer(spiderman);
+        tournament.addPlayer(batman);
         tournament.generate();
 
-        tournament.matches.forEach( function(match) {
-            if (match.round == 1) {
-                expect(match.players.length).toEqual(2);
-            } else {
-                expect(match.players.length).toEqual(0);
-            }
-        });
-    });
+        tournament.matches[2].setWinnerFromParent(1, 0);
 
-    it('should have every round 1 match two players after generating', function() {
-        tournament.addPlayer(player);
-        tournament.addPlayer(player);
-        tournament.addPlayer(player);
-        tournament.addPlayer(player);
-        tournament.addPlayer(player);
-        tournament.addPlayer(player);
-        tournament.generate();
+        var lastMatch = tournament.matches.pop();
 
-        tournament.matches.forEach( function(match) {
-            if (match.round == 1) {
-                expect(match.players[0] instanceof Player).toBe(true);
-            }
-        });
+        expect( lastMatch.players[0].name ).toEqual(spiderman.name);
+        expect( lastMatch.players[1].name ).toEqual(batman.name);
     });
 });
