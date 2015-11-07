@@ -1,4 +1,4 @@
 import $ from "jquery";
-import * as tournamentBusiness from "./tournament/tournamentBusiness";
+import * as tournamentEnrollment from "./tournamentBusiness/tournamentEnrollment";
 
-$(document).ready(tournamentBusiness.init());
+$(document).ready(tournamentEnrollment.init());

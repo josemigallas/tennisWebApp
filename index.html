@@ -36,17 +36,17 @@
         <div class="col-md-offset-2 col-md-8 col-lg-offset-0 col-lg-4">
 
             <!-- new player row -->
-                <div class="row">
-                    <div class="col-xs-12 col-sm-6  col-lg-7 panel-custom">
-                        <input type="text" class="form-control" placeholder="Player Name" id="fieldName">
-                    </div>
-                    <div class="col-xs-5 col-sm-3 col-lg-3 panel-custom">
-                        <input type="number" class="form-control" placeholder="Rank" min="0" id="fieldRank">
-                    </div>
-                    <div class="col-xs-offset-4 col-xs-3 col-sm-offset-0 col-sm-3 col-lg-2 panel-custom">
-                        <button class="btn btn-default" type="button" id="buttonAdd" style="width: 100%">Add</button>
-                    </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-lg-7 panel-custom">
+                    <input type="text" class="form-control" placeholder="Player Name" id="fieldName">
                 </div>
+                <div class="col-xs-5 col-sm-3 col-lg-3 panel-custom">
+                    <input type="number" class="form-control" placeholder="Rank" min="0" id="fieldRank">
+                </div>
+                <div class="col-xs-offset-4 col-xs-3 col-sm-offset-0 col-sm-3 col-lg-2 panel-custom">
+                    <button class="btn btn-default" type="button" id="buttonAdd" style="width: 100%">Add</button>
+                </div>
+            </div>
 
             <!-- player list row -->
             <div class="row">
@@ -95,7 +95,9 @@
         <!-- tournament bracket -->
         <div class="col-md-12 col-lg-8">
             <div class="panel panel-default">
-                Tournament bracket
+                <div class="row" id="tournamentBracket">
+
+                </div>
             </div>
         </div>
         <!-- /tournament bracket -->
@@ -104,6 +106,6 @@
     <script src="jspm_packages/system.js"></script>
     <script src="config.js"></script>
     <script>System.import('app/app.js');</script>
-    
+
 </body>
 </html>

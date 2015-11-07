@@ -7,6 +7,10 @@
     height: 100%;
 }
 
+.btn {
+    padding: 6px 0px;
+}
+
 .btn-expand {
     width: 100%;
 }
@@ -19,6 +23,25 @@
 
 .panel-body {
     padding: 0 7px;
+}
+
+.box-bracket {
+    padding: 5px;
+    margin: 10px;
+    height: 50px;
+    overflow: auto;
+}
+
+.box-bracket-ghost-med {
+    height: 20px;
+    padding: 5px;
+    margin: 10px;
+}
+
+.box-bracket-ghost {
+    height: 50px;
+    padding: 5px;
+    margin: 10px;
 }
 
 .table thead > tr > th,

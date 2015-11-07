@@ -1,5 +1,6 @@
 import $ from "jquery";
-import {Tournament} from "./tournament";
+import {Tournament} from "../tournament/tournament";
+import * as tournamentProgress from "./tournamentProgress"
 
 var tournament = new Tournament();
 
@@ -13,8 +14,7 @@ function addPlayerIfValid() {
     var validationResult = tournament.validatePlayer(player);
 
     if (validationResult.success) {
-        tournament.addPlayer(player);
-        updateTable(player);
+        addPlayerAndRefreshTable(player);
     } else {
         window.alert(validationResult.error);
     }
@@ -27,9 +27,14 @@ function getPlayerDataFromForms() {
     };
 }
 
-function updateTable(player) {
+function addPlayerAndRefreshTable(player) {
+    tournament.addPlayer(player);
+    updateTable();
+}
+
+function updateTable() {
     clearFields();
-    refreshHTMLTableWithSortedPlayers(tournament.players);
+    refreshHTMLTableWithSortedPlayers();
 }
 
 function clearFields() {
@@ -37,9 +42,9 @@ function clearFields() {
     $("#fieldRank").val("");
 }
 
-function refreshHTMLTableWithSortedPlayers(players) {
+function refreshHTMLTableWithSortedPlayers() {
     $("#playerListBody").empty();
-    players.forEach( function(player) {
+    tournament.players.forEach( function(player) {
         $("#playerListBody").append(
             `<tr><td>${player.name.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</td><td>${player.rank}</td></tr>`
         );
@@ -50,6 +55,7 @@ function generateTournament() {
     if (tournament.players.length > 1) {
         tournament.generate();
         closeEnrollment();
+        tournamentProgress.init(tournament);
 
     } else {
         window.alert("Too few players!");
