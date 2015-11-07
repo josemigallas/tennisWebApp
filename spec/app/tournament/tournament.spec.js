@@ -66,16 +66,17 @@ describe('class Tournament', function() {
         expect( tournament.matches.length ).toEqual(3);
     });
 
-    it('should order its players by descending rank after generating', function() {
-        tournament.addPlayer(batman);
+    it('should order its players by rank after adding a new player', function() {
         tournament.addPlayer(theThing);
-        tournament.addPlayer(spiderman);
+
+        expect( tournament.players[0].rank ).toEqual(5);
+
+        tournament.addPlayer(batman);
 
         expect( tournament.players[0].rank ).toEqual(3);
         expect( tournament.players[1].rank ).toEqual(5);
-        expect( tournament.players[2].rank ).toEqual(1);
 
-        tournament.generate();
+        tournament.addPlayer(spiderman);
 
         expect( tournament.players[0].rank ).toEqual(1);
         expect( tournament.players[1].rank ).toEqual(3);

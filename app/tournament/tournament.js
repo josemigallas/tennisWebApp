@@ -10,6 +10,7 @@ export class Tournament {
 
     addPlayer(player) {
         this.players.push(new Player(player.name, player.rank));
+        sortPlayersByRank(this);
     }
 
     addMatch(match) {
@@ -39,14 +40,18 @@ export class Tournament {
     }
 }
 
+function sortPlayersByRank(tournament) {
+    tournament.players.sort( function(p1, p2) {
+        return p1.rank - p2.rank;
+    });
+}
+
 function generateTournamentBracket(tournament) {
     generateFirstRoundMatches(tournament);
     generateRestOfMatches(tournament);
 }
 
 function generateFirstRoundMatches(tournament) {
-    sortPlayersByRank(tournament);
-
     var oddPlayers = tournament.players.length % 2;
 
     pairUpGoodWithBadPlayersRandomly(tournament);
@@ -54,12 +59,6 @@ function generateFirstRoundMatches(tournament) {
     if (oddPlayers) {
         bestPlayerDoesntPlayFirstRound(tournament);
     }
-}
-
-function sortPlayersByRank(tournament) {
-    tournament.players.sort( function(p1, p2) {
-        return p1.rank - p2.rank;
-    });
 }
 
 function bestPlayerDoesntPlayFirstRound(tournament) {
