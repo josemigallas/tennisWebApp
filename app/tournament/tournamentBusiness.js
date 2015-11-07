@@ -29,7 +29,7 @@ function getPlayerDataFromForms() {
 
 function updateTable(player) {
     clearFields();
-    addPlayerToHTMLTable(player);
+    refreshHTMLTableWithSortedPlayers(tournament.players);
 }
 
 function clearFields() {
@@ -37,10 +37,13 @@ function clearFields() {
     $("#fieldRank").val("");
 }
 
-function addPlayerToHTMLTable(player) {
-    $("#playerListBody").append(
-        `<tr><td>${player.name.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</td><td>${player.rank}</td></tr>`
-    );
+function refreshHTMLTableWithSortedPlayers(players) {
+    $("#playerListBody").empty();
+    players.forEach( function(player) {
+        $("#playerListBody").append(
+            `<tr><td>${player.name.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</td><td>${player.rank}</td></tr>`
+        );
+    })
 }
 
 function generateTournament() {
