@@ -71,12 +71,12 @@ describe('class Tournament', function() {
         expect( tournament.players.length ).toEqual(8);
     });
 
-    it('generating a tournament with 2 players should create 1 matches', function() {
+    it('generating a tournament with 2 players should create 1 match', function() {
         tournament.addPlayer(player);
         tournament.addPlayer(player);
         tournament.generate();
 
-        expect(tournament.totalMatches()).toEqual(1);
+        expect(tournament.matches.length).toEqual(1);
     });
 
     it('generating a tournament with 4 players should create 3 matches', function() {
@@ -86,7 +86,7 @@ describe('class Tournament', function() {
         tournament.addPlayer(player);
         tournament.generate();
 
-        expect(tournament.totalMatches()).toEqual(3);
+        expect(tournament.matches.length).toEqual(3);
     });
 
     it('should have 3 rounds if it has 8 players', function() {
@@ -100,7 +100,7 @@ describe('class Tournament', function() {
         tournament.addPlayer(player);
         tournament.generate();
 
-        expect(tournament.totalRounds()).toEqual(3);
+        expect(tournament.matches[0].round).toEqual(3);
     });
 
     it('should have a round 2 match with two round 1 parents if it has 4 players', function() {

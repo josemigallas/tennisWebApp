@@ -12,70 +12,19 @@ export class Tournament {
         this.players.push(new Player(player.name, player.rank));
     }
 
-    generate() {
-        this.fillUpWithGhostIfNeeded();
-        this.generateEmptyMatches();
-        this.generateTournamentBracket();
-        this.pairUpPlayers();
-    }
-
-    fillUpWithGhostIfNeeded() {
-        if (this.needGhostPlayers()){
-            this.fillUpWithGhosts();
-        }
-    }
-
-    enaughPlayers() {
-        return this.players.length >= 2;
-    }
-
     needGhostPlayers() {
         return !Number.isInteger(Math.log2(this.players.length));
     }
 
-    fillUpWithGhosts() {
-        var goodNumber = parseInt(Math.pow(10, this.players.length.toString(2).length), 2);
-        var i = 1;
-        while (this.players.length < goodNumber) {
-            this.addPlayer(new Player(`Ghost${i++}`, 1));
-        }
+    generate() {
+        fillUpWithGhostIfNeeded(this);
+        generateEmptyMatches(this);
+        generateTournamentBracket(this);
+        pairUpPlayers(this);
     }
 
-    generateEmptyMatches() {
-        for (var i=0; i<this.totalMatches(); i++) {
-            this.matches.push(new match.Match());
-        }
-    }
-
-    totalMatches() {
-        return this.players.length - 1;
-    }
-
-    generateTournamentBracket() {
-        var totalRounds = this.totalRounds();
-
-        this.matches.forEach( function(match, i, matches) {
-            var round = totalRounds - parseInt(Math.log2(i + 1));
-            if (round > 1) {
-                match.round = round;
-                match.parents[0] = matches[i*2+1];
-                match.parents[1] = matches[i*2+2];
-            }
-        });
-    }
-
-    totalRounds() {
-        return Math.log2(this.players.length);
-    }
-
-    pairUpPlayers() {
-        var playersCopy = this.players.slice();
-        for (var match of this.matches) {
-            if (match.round == 1) {
-                match.addPlayer(utils.spliceItemRandomly(playersCopy));
-                match.addPlayer(utils.spliceItemRandomly(playersCopy));
-            }
-        }
+    hasEnoughPlayers() {
+        return this.players.length >= 2;
     }
 
     validatePlayer(player) {
@@ -91,5 +40,57 @@ export class Tournament {
 
     isEnrolled(player) {
         return player.name.toLowerCase() === this.name.toLowerCase();
+    }
+}
+
+function fillUpWithGhostIfNeeded(tournament) {
+    if (tournament.needGhostPlayers()){
+        fillUpWithGhosts(tournament);
+    }
+}
+
+function fillUpWithGhosts(tournament) {
+    var goodNumber = parseInt(Math.pow(10, tournament.players.length.toString(2).length), 2);
+    var i = 1;
+    while (tournament.players.length < goodNumber) {
+        tournament.addPlayer(new Player(`Ghost${i++}`, 1));
+    }
+}
+
+function generateEmptyMatches(tournament) {
+    var totalMatches = calculateTotalMatches(tournament);
+    for (var i=0; i<totalMatches; i++) {
+        tournament.matches.push(new match.Match());
+    }
+}
+
+function calculateTotalMatches(tournament) {
+    return tournament.players.length - 1;
+}
+
+function generateTournamentBracket(tournament) {
+    var totalRounds = calculateTotalRounds(tournament);
+
+    tournament.matches.forEach( function(match, i, matches) {
+        var round = totalRounds - parseInt(Math.log2(i + 1));
+        if (round > 1) {
+            match.round = round;
+            match.parents[0] = matches[i*2+1];
+            match.parents[1] = matches[i*2+2];
+        }
+    });
+}
+
+function calculateTotalRounds(tournament) {
+    return Math.log2(tournament.players.length);
+}
+
+function pairUpPlayers(tournament) {
+    var playersCopy = tournament.players.slice();
+    for (var match of tournament.matches) {
+        if (match.round == 1) {
+            match.addPlayer(utils.spliceItemRandomly(playersCopy));
+            match.addPlayer(utils.spliceItemRandomly(playersCopy));
+        }
     }
 }
