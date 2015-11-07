@@ -32,7 +32,8 @@ export class Tournament {
 
     existsPlayer(player) {
         return this.players.find(function() {
-            return player.name.toLowerCase() === this.name.toLowerCase();
+            return player.name.toLowerCase() === this.name.toLowerCase()
+                || player.rank === this.rank;
         }, player);
     }
 }
