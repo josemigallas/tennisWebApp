@@ -87,7 +87,7 @@ describe('class Tournament', function() {
         setMockedTournament(8);
         tournament.generate();
 
-        expect( tournament.matches.pop().round ).toEqual(3);
+        expect( tournament.getRounds() ).toEqual(3);
     });
 
     it('should have a round 2 match with two round 1 parents if it has 4 players', function() {

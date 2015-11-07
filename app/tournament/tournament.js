@@ -17,6 +17,10 @@ export class Tournament {
         this.matches.push(match);
     }
 
+    getRounds() {
+        return this.matches[this.matches.length - 1].round;
+    }
+
     generate() {
         generateTournamentBracket(this);
     }
