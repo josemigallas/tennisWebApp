@@ -12,10 +12,6 @@ export class Tournament {
         this.players.push(new Player(player.name, player.rank));
     }
 
-    needGhostPlayers() {
-        return !Number.isInteger(Math.log2(this.players.length));
-    }
-
     generate() {
         fillUpWithGhostIfNeeded(this);
         generateEmptyMatches(this);
@@ -42,9 +38,13 @@ export class Tournament {
 }
 
 function fillUpWithGhostIfNeeded(tournament) {
-    if (tournament.needGhostPlayers()){
+    if (needGhostPlayers(tournament)) {
         fillUpWithGhosts(tournament);
     }
+}
+
+function needGhostPlayers(tournament) {
+    return !utils.isPowerOfTwo(tournament.players.length);
 }
 
 function fillUpWithGhosts(tournament) {

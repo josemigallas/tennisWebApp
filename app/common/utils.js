@@ -5,3 +5,7 @@ export function spliceItemRandomly(array) {
 export function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
+
+export function isPowerOfTwo(num) {
+    return (num & (num - 1)) == 0;
+}

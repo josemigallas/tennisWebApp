@@ -28,33 +28,6 @@ describe('class Tournament', function() {
         expect( validationResult.success ).toBe(false);
     });
 
-    it('should need to add some ghost players having only 3 players', function() {
-        tournament.addPlayer(player);
-        tournament.addPlayer(player);
-        tournament.addPlayer(player);
-
-        expect( tournament.needGhostPlayers() ).toBe(true);
-    });
-
-    it('should not need any ghost player having a 2^n-number of players', function() {
-        tournament.addPlayer(player);
-        tournament.addPlayer(player);
-
-        expect( tournament.needGhostPlayers() ).toBe(false);
-
-        tournament.addPlayer(player);
-        tournament.addPlayer(player);
-        tournament.addPlayer(player);
-        tournament.addPlayer(player);
-
-        expect( tournament.needGhostPlayers() ).toBe(true);
-
-        tournament.addPlayer(player);
-        tournament.addPlayer(player);
-
-        expect( tournament.needGhostPlayers() ).toBe(false);
-    });
-
     it('should add 1 ghost player generating a tournament with 3 players', function() {
         tournament.addPlayer(player);
         tournament.addPlayer(player);
