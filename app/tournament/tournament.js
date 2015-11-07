@@ -23,10 +23,6 @@ export class Tournament {
         pairUpPlayers(this);
     }
 
-    hasEnoughPlayers() {
-        return this.players.length >= 2;
-    }
-
     validatePlayer(player) {
         var validationResult = validatePlayer(player);
 
