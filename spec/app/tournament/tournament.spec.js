@@ -92,11 +92,16 @@ describe('class Tournament', function() {
         tournament.addPlayer(batman);
         tournament.generate();
 
-        tournament.matches[2].setWinnerFromParent(1, 0);
+        // Tournament generated:
+        // Round 1:
+        //      match[0]:(batman[0] vs theThing[1])
+        //      match[1]:(spiderman[0] vs ...[1])   ->  spidy automatically go into next match
+        //
+        //      Round 2:
+        //          match[2]:(spiderman[0] vs ...[1])
+        tournament.matches[2].setWinnerFromParent(0, 0);
 
-        var lastMatch = tournament.matches.pop();
-
-        expect( lastMatch.players[0].name ).toEqual(spiderman.name);
-        expect( lastMatch.players[1].name ).toEqual(batman.name);
+        expect( tournament.matches[2].players[0].name ).toEqual(spiderman.name);
+        expect( tournament.matches[2].players[1].name ).toEqual(batman.name);
     });
 });

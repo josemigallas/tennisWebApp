@@ -49,11 +49,11 @@ function generateFirstRoundMatches(tournament) {
 
     var oddPlayers = tournament.players.length % 2;
 
+    pairUpGoodWithBadPlayersRandomly(tournament);
+
     if (oddPlayers) {
         bestPlayerDoesntPlayFirstRound(tournament);
     }
-
-    pairUpGoodWithBadPlayersRandomly(tournament);
 }
 
 function sortPlayersByRank(tournament) {

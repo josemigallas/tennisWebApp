@@ -17,9 +17,7 @@ export class ChildMatch extends Match {
         super(parentMatch2.round + 1);
         this.parents = [parentMatch1, parentMatch2];
 
-        if (parentMatch1.players.length === 1) {
-            this.addPlayer(parentMatch1.players[0]);
-        }
+        setAutomaticWinnerIfSomePlayerHasNoOpponen(this);
     }
 
     setWinnerFromParent(parentIndex, playerIndex) {
@@ -28,4 +26,12 @@ export class ChildMatch extends Match {
         }
         this.addPlayer(this.parents[parentIndex].players[playerIndex]);
     }
+}
+
+function setAutomaticWinnerIfSomePlayerHasNoOpponen(childMatch) {
+    childMatch.parents.forEach( function(parent) {
+        if (parent.round === 1 && parent.players.length === 1) {
+            childMatch.addPlayer(parent.players[0]);
+        }
+    });
 }

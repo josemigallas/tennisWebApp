@@ -55,6 +55,9 @@ describe('class ChildMatch', function() {
     });
 
     it('should throw an error trying to set a winner from an unplayed match', function() {
+        firstParent = new Match(3);
+        secondParent = new Match(3);
+
         firstParent.addPlayer(spiderman);
         firstParent.addPlayer(theThing);
 
