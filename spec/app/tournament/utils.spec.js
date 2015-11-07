@@ -10,3 +10,13 @@ describe('method isPowerOfTwo', function() {
         expect( utils.isPowerOfTwo(30) ).toBe(false);
     });
 });
+
+describe('method findNextHigherPowerOfTwo', function() {
+    it('should return 8 evaluating 5', function() {
+        expect( utils.findNextHigherPowerOfTwo(5) ).toEqual(8);
+    });
+
+    it('should return 16 evaluating 8', function() {
+        expect( utils.findNextHigherPowerOfTwo(8) ).toEqual(16);
+    });
+});

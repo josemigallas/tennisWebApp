@@ -48,10 +48,11 @@ function needGhostPlayers(tournament) {
 }
 
 function fillUpWithGhosts(tournament) {
-    var goodNumber = parseInt(Math.pow(10, tournament.players.length.toString(2).length), 2);
-    var i = 1;
-    while (tournament.players.length < goodNumber) {
-        tournament.addPlayer(new Player(`Ghost${i++}`, 1));
+    var totalPlayers = tournament.players.length;
+    var nextPowerOfTwo = utils.findNextHigherPowerOfTwo(totalPlayers);
+
+    for (var i = totalPlayers; i < nextPowerOfTwo; i++) {
+        tournament.addPlayer(new Player(`Ghost${i}`, 1));
     }
 }
 

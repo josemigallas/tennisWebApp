@@ -9,3 +9,11 @@ export function getRandomInt(min, max) {
 export function isPowerOfTwo(num) {
     return (num & (num - 1)) == 0;
 }
+
+export function findNextHigherPowerOfTwo(num) {
+    var nextPowerOfTwo = 1;
+    while (nextPowerOfTwo <= num) {
+        nextPowerOfTwo *= 2;
+    }
+    return nextPowerOfTwo;
+}
