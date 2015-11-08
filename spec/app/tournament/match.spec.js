@@ -2,23 +2,47 @@ import {Match} from "../../../app/tournament/match";
 import {ChildMatch} from "../../../app/tournament/match";
 import {Player} from "../../../app/tournament/player";
 
+var spiderman = new Player("Spiderman", 1);
+var batman = new Player("Batman", 3);
+var theThing = new Player("The Thing", 5);
+
 describe('class Match', function() {
 
-    it('should throw an error adding more than 2 players', function() {
-        var match = new Match();
-        match.addPlayer();
-        match.addPlayer();
+    var match;
 
-        expect( function() { match.addPlayer(); }).toThrow(new Error("Match has already 2 players"));
+    beforeEach( function() {
+        match = new Match(1);
+        match.addPlayer(spiderman);
+        match.addPlayer(batman);
     });
 
+    it('should throw an error adding more than 2 players', function() {
+        expect( function() {match.addPlayer(theThing);} ).toThrow(new Error("Match has already 2 players"));
+    });
+
+    it('should finish only right after setting a winner', function() {
+        var child = new Match(2);
+        match.setNextMatch(child);
+
+        expect( match.isFinished ).toBe(false);
+
+        match.setWinner(0);
+
+        expect( match.isFinished ).toBe(true);
+    });
+
+    it('should not be able to set a second winner if it has finished', function() {
+        var child = new Match(2);
+        match.setNextMatch(child);
+
+        match.setWinner(0);
+        match.setWinner(1);
+
+        expect( child.players.length ).toEqual(1);
+    });
 });
 
 describe('class ChildMatch', function() {
-
-    var spiderman = new Player("Spiderman", 1);
-    var batman = new Player("Batman", 3);
-    var theThing = new Player("The Thing", 5);
 
     var firstParent;
     var secondParent;
@@ -42,7 +66,7 @@ describe('class ChildMatch', function() {
         expect( child.round ).toEqual(3);
     });
 
-    it('should have automatically a winner having first parent only 1 player', function() {
+    it('should have automatically a winner having its first parent in round 1 and with only 1 player', function() {
         firstParent.addPlayer(spiderman);
 
         secondParent.addPlayer(theThing);
@@ -54,10 +78,7 @@ describe('class ChildMatch', function() {
         expect( child.players.pop().name ).toEqual(spiderman.name);
     });
 
-    it('should throw an error trying to set a winner from an unplayed match', function() {
-        firstParent = new Match(3);
-        secondParent = new Match(3);
-
+    it('should have automatically a winner having its second parent in round 1 and with only 1 player', function() {
         firstParent.addPlayer(spiderman);
         firstParent.addPlayer(theThing);
 
@@ -65,8 +86,7 @@ describe('class ChildMatch', function() {
 
         var child = new ChildMatch(firstParent, secondParent);
 
-        expect( child.players.length ).toEqual(0);
-        expect( function() {child.setWinnerFromParent(0,0)} ).not.toThrow(new Error("Parent match has not finished yet"));
-        expect( function() {child.setWinnerFromParent(1,0)} ).toThrow(new Error("Parent match has not finished yet"));
+        expect( child.players.length ).toEqual(1);
+        expect( child.players.pop().name ).toEqual(batman.name);
     });
 });

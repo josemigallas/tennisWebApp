@@ -2,6 +2,7 @@ export class Match {
     constructor(round) {
         this.round = round;
         this.players = [];
+        this.isFinished = false;
     }
 
     addPlayer(player) {
@@ -10,28 +11,29 @@ export class Match {
         }
         this.players.push(player);
     }
+
+    setNextMatch(match) {
+        this.nextMatch = match;
+    }
+
+    setWinner(player) {
+        if (!this.isFinished) {
+            this.isFinished = true;
+            this.nextMatch.addPlayer(this.players[player]);
+        }
+    }
 }
 
 export class ChildMatch extends Match {
-    constructor(parentMatch1, parentMatch2) {
-        super(parentMatch2.round + 1);
-        this.parents = [parentMatch1, parentMatch2];
+    constructor(firstParent, secondParent) {
+        super(secondParent.round + 1);
+        firstParent.setNextMatch(this);
+        secondParent.setNextMatch(this);
 
-        setAutomaticWinnerIfSomePlayerHasNoOpponen(this);
-    }
-
-    setWinnerFromParent(parentIndex, playerIndex) {
-        if (this.parents[parentIndex].players.length !== 2) {
-            throw new Error("Parent match has not finished yet");
+        if (firstParent.round === 1 && firstParent.players.length === 1) {
+            firstParent.setWinner(0);
+        } else if (secondParent.round === 1 && secondParent.players.length === 1) {
+            secondParent.setWinner(0);
         }
-        this.addPlayer(this.parents[parentIndex].players[playerIndex]);
     }
-}
-
-function setAutomaticWinnerIfSomePlayerHasNoOpponen(childMatch) {
-    childMatch.parents.forEach( function(parent) {
-        if (parent.round === 1 && parent.players.length === 1) {
-            childMatch.addPlayer(parent.players[0]);
-        }
-    });
 }

@@ -90,15 +90,14 @@ describe('class Tournament', function() {
         expect( tournament.getRounds() ).toEqual(3);
     });
 
-    it('should have a round 2 match with two round 1 parents if it has 4 players', function() {
+    it('should have two round 1 matches with a round 2 child if it has 4 players', function() {
         setMockedTournament(4);
         tournament.generate();
 
-        var lastMatch = tournament.matches.pop();
-
-        expect( lastMatch.round ).toEqual(2);
-        expect( lastMatch.parents[0].round ).toEqual(1);
-        expect( lastMatch.parents[1].round ).toEqual(1);
+        expect( tournament.matches[0].round ).toEqual(1);
+        expect( tournament.matches[0].nextMatch.round ).toEqual(2);
+        expect( tournament.matches[1].round ).toEqual(1);
+        expect( tournament.matches[1].nextMatch.round ).toEqual(2);
     });
 
     it('should have a final match between Spiderman and Batman if The Thing is defeated during first round', function() {
@@ -110,11 +109,11 @@ describe('class Tournament', function() {
         // Tournament generated:
         // Round 1:
         //      match[0]:(batman[0] vs theThing[1])
-        //      match[1]:(spiderman[0] vs ...[1])   ->  spidy automatically go into next match
+        //      match[1]:(spiderman[0] vs ...[1])   ->  spidey automatically goes into next round
         //
         //      Round 2:
         //          match[2]:(spiderman[0] vs ...[1])
-        tournament.matches[2].setWinnerFromParent(0, 0);
+        tournament.matches[0].setWinner(0);
 
         expect( tournament.matches[2].players[0].name ).toEqual(spiderman.name);
         expect( tournament.matches[2].players[1].name ).toEqual(batman.name);
