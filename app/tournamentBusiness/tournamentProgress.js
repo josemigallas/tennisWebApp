@@ -36,15 +36,23 @@ function divideBracketVerticallyInRounds(rounds) {
 
 function printAllMatchesInHTML(matches) {
     matches.forEach( function(match, index, matches) {
-        var p0 = match.players[0] === undefined ? "..." : match.players[0].name;
-        var p1 = match.players[1] === undefined ? "..." : match.players[1].name;
+        var html = `<div class="panel panel-default box-bracket"><div>`;
 
-        $(`#round${match.round}`).append(
-            `<div class="panel panel-default box-bracket">
-            <div>${p0} <a id="match${index}player0">win</a></div>
-            <div>${p1} <a id="match${index}player1">win</a></div>
-            </div>`
-        );
+        if (match.players[0]) {
+            html += `${match.players[0].name}`;
+            html += match.isFinished ? "" : ` <a id="match${index}player0">win</a>`;
+        }
+
+        html += "</div><div>";
+
+        if (match.players[1]) {
+            html += `${match.players[1].name}`;
+            html += match.isFinished ? "" : ` <a id="match${index}player1">win</a>`;
+        }
+
+        html += "</div></div>";
+
+        $(`#round${match.round}`).append(html);
     });
 }
 
@@ -57,7 +65,11 @@ function bindClickEventOnWinButtons(matches) {
 
 function createOnClickCallback(match, player) {
     return function() {
-        tournament.matches[match].setWinner(player);
-        generateHTMLTournamentBracket(tournament);
+        if (tournament.matches[match].players.length === 2) {
+            tournament.matches[match].setWinner(player);
+            generateHTMLTournamentBracket(tournament);
+        } else {
+            alert("The match has not even started yet!");
+        }
     };
 }
