@@ -89,19 +89,32 @@ function generateMatchHtmlPanel(match, i) {
 }
 
 function bindClickEventOnWinButtons() {
-    for (var m = 0; m < tournament.matches.length-1; m++) {
-        $(`#match${m}player0`).click(createOnClickCallback(m, 0));
-        $(`#match${m}player1`).click(createOnClickCallback(m, 1));
+    for (var m = 0; m < tournament.matches.length; m++) {
+        $(`#match${m}player0`).click(createOnClickCallback(tournament.matches[m], 0));
+        $(`#match${m}player1`).click(createOnClickCallback(tournament.matches[m], 1));
     }
 }
 
-function createOnClickCallback(match, player) {
+function createOnClickCallback(match, playerIndex) {
     return function() {
-        if (tournament.matches[match].players.length === 2) {
-            tournament.matches[match].setWinner(player);
+        if (match.players.length === 2) {
+            if (isFinalMatch(match)) {
+                setFinalWinner(match, playerIndex);
+            } else {
+                match.setWinner(playerIndex);
+            }
             generateHTMLTournamentBracket(tournament);
         } else {
             alert("The match has not even started yet!");
         }
     };
+}
+
+function isFinalMatch(match) {
+    return tournament.getRounds() === match.round;
+}
+
+function setFinalWinner(match, playerIndex) {
+    alert(`${match.players[playerIndex].name} has won!`)
+    match.isFinished = true;
 }
