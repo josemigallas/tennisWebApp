@@ -1,14 +1,9 @@
 import $ from "jquery";
 
 var tournament;
-var round1Matches = 0;
 
 export function init(t) {
     tournament = t;
-
-    tournament.matches.forEach( function(match) {
-        if (match.round === 1) round1Matches++;
-    });
 
     generateHTMLTournamentBracket(tournament);
 }
@@ -16,7 +11,7 @@ export function init(t) {
 function generateHTMLTournamentBracket(tournament) {
     cleanBracket();
     divideBracketVerticallyInRounds(tournament.getRounds());
-    printAllMatchesInHTML(tournament.matches);
+    appendAllMatchesWithSpacesToHtml(tournament.matches);
     bindClickEventOnWinButtons(tournament.matches);
 }
 
@@ -34,26 +29,63 @@ function divideBracketVerticallyInRounds(rounds) {
     }
 }
 
-function printAllMatchesInHTML(matches) {
-    matches.forEach( function(match, index, matches) {
-        var html = `<div class="panel panel-default box-bracket"><div>`;
-
-        if (match.players[0]) {
-            html += `${match.players[0].name}`;
-            html += match.isFinished ? "" : ` <a id="match${index}player0">win</a>`;
+function appendAllMatchesWithSpacesToHtml(matches) {
+    matches.forEach( function(match, i, matches) {
+        if (match.round > 1) {
+            appendTransparenSpacesToHtml(match.round, matches[i-1].round);
         }
-
-        html += "</div><div>";
-
-        if (match.players[1]) {
-            html += `${match.players[1].name}`;
-            html += match.isFinished ? "" : ` <a id="match${index}player1">win</a>`;
-        }
-
-        html += "</div></div>";
-
-        $(`#round${match.round}`).append(html);
+        appendMatchHtmlPanel(match, i);
     });
+}
+
+function appendTransparenSpacesToHtml(round, lastRound) {
+    $(`#round${round}`).append(
+        generateHtmlTransparentSpaces(round, lastRound)
+    );
+}
+
+function generateHtmlTransparentSpaces(round, lastRound) {
+    var space = "";
+
+    if (round !== lastRound) {
+        if (round > 1) {
+            space += `<div class="panel panel-default box-bracket-ghost-med"></div>`;
+        }
+        if (round > 2) {
+            space += `<div class="panel panel-default box-bracket-ghost"></div>`.repeat(round - 2);
+        }
+
+    } else {
+        space += `<div class="panel panel-default box-bracket-ghost"></div>`;
+    }
+
+    return space;
+}
+
+function appendMatchHtmlPanel(match, i) {
+    $(`#round${match.round}`).append(
+        generateMatchHtmlPanel(match, i)
+    );
+}
+
+function generateMatchHtmlPanel(match, i) {
+    var html = `<div class="panel panel-default box-bracket"><div>`;
+
+    if (match.players[0]) {
+        html += `${match.players[0].name}`;
+        html += match.isFinished ? "" : ` <a id="match${i}player0">win</a>`;
+    }
+
+    html += "</div><div>";
+
+    if (match.players[1]) {
+        html += `${match.players[1].name}`;
+        html += match.isFinished ? "" : ` <a id="match${i}player1">win</a>`;
+    }
+
+    html += "</div></div>";
+
+    return html;
 }
 
 function bindClickEventOnWinButtons(matches) {

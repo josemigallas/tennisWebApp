@@ -36,12 +36,16 @@
     height: 20px;
     padding: 5px;
     margin: 10px;
+    border: none;
+    box-shadow: none;
 }
 
 .box-bracket-ghost {
     height: 50px;
     padding: 5px;
     margin: 10px;
+    border: none;
+    box-shadow: none;
 }
 
 .table thead > tr > th,
