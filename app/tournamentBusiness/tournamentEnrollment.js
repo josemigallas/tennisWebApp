@@ -1,6 +1,7 @@
+import bootstrap from "bootstrap";
 import $ from "jquery";
 import {Tournament} from "../tournament/tournament";
-import * as tournamentProgress from "./tournamentProgress"
+import * as tournamentProgress from "./tournamentProgress";
 
 var tournament = new Tournament();
 
@@ -63,6 +64,6 @@ function generateTournament() {
 }
 
 function closeEnrollment() {
-    $("#buttonAdd").off();
-    $("#buttonCreate").off();
+    $("#newPlayerRowContainer").collapse("hide");
+    $("#buttonCreateContainer").collapse("hide");
 }
