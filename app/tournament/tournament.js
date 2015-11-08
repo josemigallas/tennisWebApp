@@ -58,7 +58,7 @@ function generateTournamentBracket(tournament) {
 function generateFirstRoundMatches(tournament) {
     var oddPlayers = tournament.players.length % 2;
 
-    pairUpGoodWithBadPlayersRandomly(tournament);
+    pairUpGoodWithBadPlayersRandomly(tournament, oddPlayers);
 
     if (oddPlayers) {
         bestPlayerDoesntPlayFirstRound(tournament);
@@ -71,9 +71,7 @@ function bestPlayerDoesntPlayFirstRound(tournament) {
     tournament.addMatch(match);
 }
 
-function pairUpGoodWithBadPlayersRandomly(tournament) {
-    var oddPlayers = tournament.players.length % 2;
-
+function pairUpGoodWithBadPlayersRandomly(tournament, oddPlayers) {
     var bestPlayers = tournament.players.slice(oddPlayers, tournament.players.length / 2 + oddPlayers);
     var worstPlayers = tournament.players.slice(tournament.players.length / 2 + oddPlayers);
 
