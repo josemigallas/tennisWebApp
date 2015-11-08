@@ -1,4 +1,5 @@
 import $ from "jquery";
+import * as tournamentAlerts from "./tournamentAlerts";
 
 var tournament;
 
@@ -105,7 +106,7 @@ function createOnClickCallback(match, playerIndex) {
             }
             generateHTMLTournamentBracket(tournament);
         } else {
-            alert("The match has not even started yet!");
+            tournamentAlerts.showMatchNotFinished();
         }
     };
 }
@@ -115,6 +116,6 @@ function isFinalMatch(match) {
 }
 
 function setFinalWinner(match, playerIndex) {
-    alert(`${match.players[playerIndex].name} has won!`)
+    tournamentAlerts.showWinner(match.players[playerIndex]);
     match.isFinished = true;
 }

@@ -2,6 +2,7 @@ import bootstrap from "bootstrap";
 import $ from "jquery";
 import {Tournament} from "../tournament/tournament";
 import * as tournamentProgress from "./tournamentProgress";
+import * as tournamentAlerts from "./tournamentAlerts";
 
 var tournament = new Tournament();
 
@@ -17,7 +18,7 @@ function addPlayerIfValid() {
     if (validationResult.success) {
         addPlayerAndRefreshTable(player);
     } else {
-        window.alert(validationResult.error);
+        tournamentAlerts.showValidationError(validationResult);
     }
 }
 
@@ -59,7 +60,7 @@ function generateTournament() {
         tournamentProgress.init(tournament);
 
     } else {
-        window.alert("Too few players!");
+        tournamentAlerts.showNotEnoughPlayers();
     }
 }
 
