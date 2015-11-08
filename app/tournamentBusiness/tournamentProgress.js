@@ -20,11 +20,11 @@ function cleanBracket() {
 }
 
 function divideBracketVerticallyInRounds(rounds) {
-    var colSize = 12/rounds;
+    var colSize = 100/rounds;
 
     for (var r = 1; r <= rounds; r++) {
         $("#tournamentBracket").append(
-            `<div class="col-xs-${colSize}" id="round${r}"></div>`
+            `<div class="col-xs-1" id="round${r}" style="width: ${colSize}%; padding: 0;"></div>`
         );
     }
 }
