@@ -75,7 +75,7 @@ function pairUpGoodWithBadPlayersRandomly(tournament) {
     var oddPlayers = tournament.players.length % 2;
 
     var bestPlayers = tournament.players.slice(oddPlayers, tournament.players.length / 2 + oddPlayers);
-    var worstPlayers = tournament.players.slice(tournament.players.length / 2);
+    var worstPlayers = tournament.players.slice(tournament.players.length / 2 + oddPlayers);
 
     while (bestPlayers.length) {
         var match = new Match(1);
