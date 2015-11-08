@@ -5,10 +5,10 @@ var tournament;
 export function init(t) {
     tournament = t;
 
-    generateHTMLTournamentBracket(tournament);
+    generateHTMLTournamentBracket();
 }
 
-function generateHTMLTournamentBracket(tournament) {
+function generateHTMLTournamentBracket() {
     cleanBracket();
     divideBracketVerticallyInRounds(tournament.getRounds());
     appendAllMatchesWithSpacesToHtml(tournament.matches);
@@ -29,8 +29,8 @@ function divideBracketVerticallyInRounds(rounds) {
     }
 }
 
-function appendAllMatchesWithSpacesToHtml(matches) {
-    matches.forEach( function(match, i, matches) {
+function appendAllMatchesWithSpacesToHtml() {
+    tournament.matches.forEach( function(match, i, matches) {
         if (match.round > 1) {
             appendTransparenSpacesToHtml(match.round, matches[i-1].round);
         }
@@ -88,8 +88,8 @@ function generateMatchHtmlPanel(match, i) {
     return html;
 }
 
-function bindClickEventOnWinButtons(matches) {
-    for (var m = 0; m < matches.length-1; m++) {
+function bindClickEventOnWinButtons() {
+    for (var m = 0; m < tournament.matches.length-1; m++) {
         $(`#match${m}player0`).click(createOnClickCallback(m, 0));
         $(`#match${m}player1`).click(createOnClickCallback(m, 1));
     }
