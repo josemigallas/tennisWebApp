@@ -49,15 +49,15 @@ function printAllMatchesInHTML(matches) {
 }
 
 function bindClickEventOnWinButtons(matches) {
-    for (var m = 0; m < matches.length; m++) {
-        $(`#match${m}player0`).click(createOnClickCallback(m-m%2, m%2, 0));
-        $(`#match${m}player1`).click(createOnClickCallback(m-m%2, m%2, 1));
+    for (var m = 0; m < matches.length-1; m++) {
+        $(`#match${m}player0`).click(createOnClickCallback(m, 0));
+        $(`#match${m}player1`).click(createOnClickCallback(m, 1));
     }
 }
 
-function createOnClickCallback(m, parentIndex, playerIndex) {
+function createOnClickCallback(match, player) {
     return function() {
-        tournament.matches[round1Matches - m/2 + m].setWinnerFromParent(parentIndex, playerIndex);
+        tournament.matches[match].setWinner(player);
         generateHTMLTournamentBracket(tournament);
     };
 }
