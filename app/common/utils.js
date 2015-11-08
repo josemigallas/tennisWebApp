@@ -1,4 +1,4 @@
-export function spliceItemRandomly(array) {
+export function shiftItemRandomly(array) {
     return array.splice(getRandomInt(0, array.length), 1)[0];
 }
 
