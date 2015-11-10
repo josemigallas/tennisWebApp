@@ -77,8 +77,8 @@ function pairUpGoodWithBadPlayersRandomly(tournament, oddPlayers) {
 
     while (bestPlayers.length) {
         var match = new Match(1);
-        match.addPlayer(utils.shiftItemRandomly(bestPlayers));
-        match.addPlayer(utils.shiftItemRandomly(worstPlayers));
+        match.addPlayer(utils.getAndRemoveItemRandomlyFromArray(bestPlayers));
+        match.addPlayer(utils.getAndRemoveItemRandomlyFromArray(worstPlayers));
         tournament.addMatch(match);
     }
 }
