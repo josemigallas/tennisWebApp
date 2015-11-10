@@ -1,5 +1,6 @@
-export function shiftItemRandomly(array) {
-    return array.splice(getRandomInt(0, array.length), 1)[0];
+export function getAndRemoveItemRandomlyFromArray(array) {
+    var randomIndex = getRandomInt(0, array.length);
+    return array.splice(randomIndex, 1)[0];
 }
 
 export function getRandomInt(min, max) {
