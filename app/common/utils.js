@@ -1,5 +1,5 @@
 export function getAndRemoveItemRandomlyFromArray(array) {
-    var randomIndex = getRandomInt(0, array.length);
+    var randomIndex = getRandomInt(0, array.length - 1);
     return array.splice(randomIndex, 1)[0];
 }
 
