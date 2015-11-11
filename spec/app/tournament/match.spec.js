@@ -20,15 +20,15 @@ describe('class Match', function() {
         expect( function() {match.addPlayer(theThing);} ).toThrow(new Error("Match has already 2 players"));
     });
 
-    it('should finish only right after setting a winner', function() {
+    it('should have a winner only right after setting a winner', function() {
         var child = new Match(2);
         match.setNextMatch(child);
 
-        expect( match.isFinished ).toBe(false);
+        expect( match.winner ).toBeUndefined;
 
         match.setWinner(0);
 
-        expect( match.isFinished ).toBe(true);
+        expect( match.winner ).not.toBeUndefined;
     });
 
     it('should not be able to set a second winner if it has finished', function() {

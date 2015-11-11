@@ -74,14 +74,14 @@ function generateMatchHtmlPanel(match, i) {
 
     if (match.players[0]) {
         html += `${match.players[0].name}`;
-        html += match.isFinished ? "" : ` <a id="match${i}player0">win</a>`;
+        html += match.winner ? "" : ` <a id="match${i}player0">win</a>`;
     }
 
     html += "</div><div>";
 
     if (match.players[1]) {
         html += `${match.players[1].name}`;
-        html += match.isFinished ? "" : ` <a id="match${i}player1">win</a>`;
+        html += match.winner ? "" : ` <a id="match${i}player1">win</a>`;
     }
 
     html += "</div></div>";
@@ -117,5 +117,5 @@ function isFinalMatch(match) {
 
 function setFinalWinner(match, playerIndex) {
     tournamentAlerts.showWinner(match.players[playerIndex]);
-    match.isFinished = true;
+    match.setWinner(playerIndex);
 }

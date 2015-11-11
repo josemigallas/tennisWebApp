@@ -2,7 +2,6 @@ export class Match {
     constructor(round) {
         this.round = round;
         this.players = [];
-        this.isFinished = false;
     }
 
     addPlayer(player) {
@@ -16,10 +15,10 @@ export class Match {
         this.nextMatch = match;
     }
 
-    setWinner(player) {
-        if (!this.isFinished) {
-            this.isFinished = true;
-            this.nextMatch.addPlayer(this.players[player]);
+    setWinner(playerIndex) {
+        if (this.winner === undefined) {
+            this.winner = this.players[playerIndex];
+            this.nextMatch.addPlayer(this.players[playerIndex]);
         }
     }
 }
