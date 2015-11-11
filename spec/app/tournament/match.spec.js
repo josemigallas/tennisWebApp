@@ -21,8 +21,8 @@ describe('class Match', function() {
     });
 
     it('should have a winner only right after setting a winner', function() {
-        var child = new Match(2);
-        match.setNextMatch(child);
+        var nextMatch = new Match(2);
+        match.setNextMatch(nextMatch);
 
         expect( match.winner ).toBeUndefined;
 
@@ -32,13 +32,13 @@ describe('class Match', function() {
     });
 
     it('should not be able to set a second winner if it has finished', function() {
-        var child = new Match(2);
-        match.setNextMatch(child);
+        var nextMatch = new Match(2);
+        match.setNextMatch(nextMatch);
 
         match.setWinner(0);
         match.setWinner(1);
 
-        expect( child.players.length ).toEqual(1);
+        expect( nextMatch.players.length ).toEqual(1);
     });
 });
 
@@ -53,40 +53,16 @@ describe('class MatchFromPrevRound', function() {
     });
 
     it('should be in round 2 having both parents in round 1', function() {
-        var child = new MatchFromPrevRound(leftMatch, rightMatch);
+        var nextMatch = new MatchFromPrevRound(leftMatch, rightMatch);
 
-        expect( child.round ).toEqual(2);
+        expect( nextMatch.round ).toEqual(2);
     });
 
     it('should be in round 3 having first parent in round 1 and second in round 2', function() {
         rightMatch.round = 2;
 
-        var child = new MatchFromPrevRound(leftMatch, rightMatch);
+        var nextMatch = new MatchFromPrevRound(leftMatch, rightMatch);
 
-        expect( child.round ).toEqual(3);
-    });
-
-    it('should have automatically a winner having its first parent in round 1 and with only 1 player', function() {
-        leftMatch.addPlayer(spiderman);
-
-        rightMatch.addPlayer(theThing);
-        rightMatch.addPlayer(batman);
-
-        var child = new MatchFromPrevRound(leftMatch, rightMatch);
-
-        expect( child.players.length ).toEqual(1);
-        expect( child.players.pop().name ).toEqual(spiderman.name);
-    });
-
-    it('should have automatically a winner having its second parent in round 1 and with only 1 player', function() {
-        leftMatch.addPlayer(spiderman);
-        leftMatch.addPlayer(theThing);
-
-        rightMatch.addPlayer(batman);
-
-        var child = new MatchFromPrevRound(leftMatch, rightMatch);
-
-        expect( child.players.length ).toEqual(1);
-        expect( child.players.pop().name ).toEqual(batman.name);
+        expect( nextMatch.round ).toEqual(3);
     });
 });
