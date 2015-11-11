@@ -23,16 +23,16 @@ export class Match {
     }
 }
 
-export class ChildMatch extends Match {
-    constructor(firstParent, secondParent) {
-        super(secondParent.round + 1);
-        firstParent.setNextMatch(this);
-        secondParent.setNextMatch(this);
 
         if (firstParent.round === 1 && firstParent.players.length === 1) {
             firstParent.setWinner(0);
         } else if (secondParent.round === 1 && secondParent.players.length === 1) {
             secondParent.setWinner(0);
         }
+export class MatchFromPrevRound extends Match {
+    constructor(leftMatch, rightMatch) {
+        super(rightMatch.round + 1);
+        leftMatch.setNextMatch(this);
+        rightMatch.setNextMatch(this);
     }
 }

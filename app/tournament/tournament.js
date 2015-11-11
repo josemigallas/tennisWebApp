@@ -1,5 +1,5 @@
 import {Player, validatePlayer} from "./player";
-import {Match, ChildMatch} from "./match";
+import {Match, MatchFromPrevRound} from "./match";
 import * as utils from "../common/utils";
 
 export class Tournament {
@@ -85,7 +85,7 @@ function pairUpGoodWithBadPlayersRandomly(tournament, oddPlayers) {
 
 function generateRestOfMatches(tournament) {
     for (var i = 0; i < tournament.matches.length - 1; i += 2) {
-        tournament.addMatch(new ChildMatch(
+        tournament.addMatch(new MatchFromPrevRound(
             tournament.matches[i],
             tournament.matches[i+1]
         ));

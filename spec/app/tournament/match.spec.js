@@ -1,5 +1,5 @@
 import {Match} from "../../../app/tournament/match";
-import {ChildMatch} from "../../../app/tournament/match";
+import {MatchFromPrevRound} from "../../../app/tournament/match";
 import {Player} from "../../../app/tournament/player";
 
 var spiderman = new Player("Spiderman", 1);
@@ -42,49 +42,49 @@ describe('class Match', function() {
     });
 });
 
-describe('class ChildMatch', function() {
+describe('class MatchFromPrevRound', function() {
 
-    var firstParent;
-    var secondParent;
+    var leftMatch;
+    var rightMatch;
 
     beforeEach( function() {
-        firstParent = new Match(1);
-        secondParent = new Match(1);
+        leftMatch = new Match(1);
+        rightMatch = new Match(1);
     });
 
     it('should be in round 2 having both parents in round 1', function() {
-        var child = new ChildMatch(firstParent, secondParent);
+        var child = new MatchFromPrevRound(leftMatch, rightMatch);
 
         expect( child.round ).toEqual(2);
     });
 
     it('should be in round 3 having first parent in round 1 and second in round 2', function() {
-        secondParent.round = 2;
+        rightMatch.round = 2;
 
-        var child = new ChildMatch(firstParent, secondParent);
+        var child = new MatchFromPrevRound(leftMatch, rightMatch);
 
         expect( child.round ).toEqual(3);
     });
 
     it('should have automatically a winner having its first parent in round 1 and with only 1 player', function() {
-        firstParent.addPlayer(spiderman);
+        leftMatch.addPlayer(spiderman);
 
-        secondParent.addPlayer(theThing);
-        secondParent.addPlayer(batman);
+        rightMatch.addPlayer(theThing);
+        rightMatch.addPlayer(batman);
 
-        var child = new ChildMatch(firstParent, secondParent);
+        var child = new MatchFromPrevRound(leftMatch, rightMatch);
 
         expect( child.players.length ).toEqual(1);
         expect( child.players.pop().name ).toEqual(spiderman.name);
     });
 
     it('should have automatically a winner having its second parent in round 1 and with only 1 player', function() {
-        firstParent.addPlayer(spiderman);
-        firstParent.addPlayer(theThing);
+        leftMatch.addPlayer(spiderman);
+        leftMatch.addPlayer(theThing);
 
-        secondParent.addPlayer(batman);
+        rightMatch.addPlayer(batman);
 
-        var child = new ChildMatch(firstParent, secondParent);
+        var child = new MatchFromPrevRound(leftMatch, rightMatch);
 
         expect( child.players.length ).toEqual(1);
         expect( child.players.pop().name ).toEqual(batman.name);
