@@ -9,7 +9,7 @@ export class Tournament {
     }
 
     addPlayer(player) {
-        this.players.push(new Player(player.name, player.rank));
+        this.players.push(player);
     }
 
     addMatch(match) {
