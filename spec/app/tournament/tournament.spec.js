@@ -19,7 +19,7 @@ describe('class Tournament', function() {
         }
     }
 
-    it('should return false when searching for a non-enrolled player', function() {
+    it('should return undefined when searching for a non-enrolled player', function() {
         expect( tournament.existsPlayer(spiderman) ).toBeUndefined();
     });
 
