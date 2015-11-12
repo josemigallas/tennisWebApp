@@ -98,7 +98,7 @@ function bindClickEventOnWinButtons() {
 
 function createOnClickCallback(match, playerIndex) {
     return function() {
-        if (match.players.length === 2) {
+        if (match.players.length === 2 || match.round === 1) {
             if (isFinalMatch(match)) {
                 setFinalWinner(match, playerIndex);
             } else {

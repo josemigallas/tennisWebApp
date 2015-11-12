@@ -109,13 +109,14 @@ describe('class Tournament', function() {
         // Tournament generated:
         // Round 1:
         //      match[0]:(batman[0] vs theThing[1])
-        //      match[1]:(spiderman[0] vs ...[1])   ->  spidey automatically goes into next round
+        //      match[1]:(spiderman[0] vs ...[1])
         //
         //      Round 2:
-        //          match[2]:(spiderman[0] vs ...[1])
+        //          match[2]:(...[0] vs ...[1])
         tournament.matches[0].setWinner(0);
+        tournament.matches[1].setWinner(0);
 
-        expect( tournament.matches[2].players[0].name ).toEqual(spiderman.name);
-        expect( tournament.matches[2].players[1].name ).toEqual(batman.name);
+        expect( tournament.matches[2].players[0].name ).toEqual(batman.name);
+        expect( tournament.matches[2].players[1].name ).toEqual(spiderman.name);
     });
 });
