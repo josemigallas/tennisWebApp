@@ -11,7 +11,7 @@ export function init(t) {
 
 function generateHTMLTournamentBracket() {
     cleanBracket();
-    divideBracketVerticallyInRounds(tournament.getRounds());
+    divideBracketVerticallyInRounds(tournament.getNumberOfRounds());
     appendAllMatchesWithSpacesToHtml(tournament.matches);
     bindClickEventOnWinButtons(tournament.matches);
 }
@@ -112,7 +112,7 @@ function createOnClickCallback(match, playerIndex) {
 }
 
 function isFinalMatch(match) {
-    return tournament.getRounds() === match.round;
+    return tournament.getNumberOfRounds() === match.round;
 }
 
 function setFinalWinner(match, playerIndex) {

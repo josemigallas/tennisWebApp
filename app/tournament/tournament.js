@@ -16,7 +16,7 @@ export class Tournament {
         this.matches.push(match);
     }
 
-    getRounds() {
+    getNumberOfRounds() {
         return this.matches[this.matches.length - 1].round;
     }
 
