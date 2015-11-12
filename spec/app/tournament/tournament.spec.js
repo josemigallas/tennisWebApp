@@ -34,12 +34,6 @@ describe('class Tournament', function() {
         var validationResult = tournament.validatePlayer(spiderman);
 
         expect( validationResult.error.pop() ).toEqual("Player already enrolled");
-    });
-
-    it('should return an unsuccessful validation when validating a player who is already enrolled', function() {
-        tournament.addPlayer(spiderman);
-        var validationResult = tournament.validatePlayer(spiderman);
-
         expect( validationResult.success ).toBe(false);
     });
 
@@ -48,12 +42,6 @@ describe('class Tournament', function() {
         var validationResult = tournament.validatePlayer(batman);
 
         expect( validationResult.error.pop() ).toBeUndefined;
-    });
-
-    it('should return a successful validation when validating a player who is not yet enrolled', function() {
-        tournament.addPlayer(spiderman);
-        var validationResult = tournament.validatePlayer(batman);
-
         expect( validationResult.success ).toBe(true);
     });
 
