@@ -29,7 +29,7 @@ export function showMatchNotFinished() {
 export function showWinner(player) {
     showCustomAlert(
         "Holy cats!",
-        "player.name won the tournament!"
+        `${player.name} won the tournament!`
     )
 }
 
