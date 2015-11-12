@@ -13,9 +13,9 @@ describe('class Tournament', function() {
         tournament = new Tournament();
     });
 
-    function setMockedTournament(players) {
-        while (players--) {
-            tournament.addPlayer(spiderman);
+    function setMockedTournament(playersCount) {
+        while (playersCount--) {
+            tournament.addPlayer(new Player(`player${playersCount}`, playersCount));
         }
     }
 
