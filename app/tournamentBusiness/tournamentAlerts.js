@@ -9,9 +9,13 @@ export function showNotEnoughPlayers() {
 }
 
 export function showValidationError(validationResult) {
+    var errorLog = "";
+
+    validationResult.error.forEach((e) => errorLog += e + "<br>");
+
     showCustomAlert(
         "Not a valid player",
-        validationResult.error
+        errorLog
     )
 }
 

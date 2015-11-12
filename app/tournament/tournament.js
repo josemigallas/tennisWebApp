@@ -29,7 +29,7 @@ export class Tournament {
         var validationResult = validatePlayer(player);
 
         if (validationResult.success && this.existsPlayer(player)) {
-            validationResult.error = "Player already enrolled";
+            validationResult.error.push("Player already enrolled");
             validationResult.success = false;
         }
 

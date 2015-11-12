@@ -5,19 +5,18 @@ export class Player {
     }
 }
 
-export function validatePlayer(data) {
-    var validationResult = {};
+export function validatePlayer(player) {
+    var validationResult = { error: [] };
 
-    validationResult.error = validateName(data.name) + validateRank(data.rank);
+    if (!player.name) {
+        validationResult.error.push("Name cannot be empty.");
+    }
+
+    if (player.rank < 1) {
+        validationResult.error.push("Rank has to be greater than 0.");
+    }
+
     validationResult.success = validationResult.error.length === 0;
 
     return validationResult;
-}
-
-function validateName(name) {
-    return (!name) ? "Name cannot be empty. " : "";
-}
-
-function validateRank(rank) {
-    return (rank < 1) ? "Rank has to be greater than 0." : "";
 }
