@@ -19,8 +19,14 @@ describe('class Tournament', function() {
         }
     }
 
-    it('should return undefined when searching for a non-enrolled player', function() {
-        expect( tournament.existsPlayer(spiderman) ).toBeUndefined();
+    it('should return false when searching for a non-enrolled player', function() {
+        expect( tournament.existsPlayer(spiderman) ).toBe(false);
+    });
+
+    it('should return true when searching for an enrolled player', function() {
+        tournament.addPlayer(spiderman);
+
+        expect( tournament.existsPlayer(spiderman) ).toBe(true);
     });
 
     it('should return a validation error when validating a player who is already enrolled', function() {

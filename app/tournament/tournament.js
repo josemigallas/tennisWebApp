@@ -36,7 +36,7 @@ export class Tournament {
     }
 
     existsPlayer(player) {
-        return this.players.find( function(p) {
+        return undefined !== this.players.find( function(p) {
             return p.name.toLowerCase() === this.name.toLowerCase()
             || p.rank === this.rank;
         }, player);
