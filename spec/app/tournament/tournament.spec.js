@@ -106,13 +106,6 @@ describe('class Tournament', function() {
         tournament.addPlayer(batman);
         tournament.generate();
 
-        // Tournament generated:
-        // Round 1:
-        //      match[0]:(batman[0] vs theThing[1])
-        //      match[1]:(spiderman[0] vs ...[1])
-        //
-        //      Round 2:
-        //          match[2]:(...[0] vs ...[1])
         tournament.matches[0].setWinner(0);
         tournament.matches[1].setWinner(0);
 
