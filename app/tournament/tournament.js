@@ -10,7 +10,6 @@ export class Tournament {
 
     addPlayer(player) {
         this.players.push(new Player(player.name, player.rank));
-        sortPlayersByRank(this);
     }
 
     addMatch(match) {
@@ -51,6 +50,7 @@ function sortPlayersByRank(tournament) {
 }
 
 function generateTournamentBracket(tournament) {
+    sortPlayersByRank(tournament);
     generateFirstRoundMatches(tournament);
     generateRestOfMatches(tournament);
 }
