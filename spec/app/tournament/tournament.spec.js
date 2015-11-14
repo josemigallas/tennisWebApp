@@ -61,16 +61,16 @@ describe('class Tournament', function() {
     });
 
     it('should order its players by rank after generating', function() {
-        tournament.addPlayer(theThing);
+        tournament.addPlayer(new Player("playerRank5", 5));
 
         expect( tournament.players[0].rank ).toEqual(5);
 
-        tournament.addPlayer(batman);
+        tournament.addPlayer(new Player("playerRank3", 3));
 
         expect( tournament.players[0].rank ).toEqual(5);
         expect( tournament.players[1].rank ).toEqual(3);
 
-        tournament.addPlayer(spiderman);
+        tournament.addPlayer(new Player("playerRank1", 1));
 
         expect( tournament.players[0].rank ).toEqual(5);
         expect( tournament.players[1].rank ).toEqual(3);
@@ -94,10 +94,14 @@ describe('class Tournament', function() {
         setMockedTournament(4);
         tournament.generate();
 
-        expect( tournament.matches[0].round ).toEqual(1);
-        expect( tournament.matches[0].nextMatch.round ).toEqual(2);
-        expect( tournament.matches[1].round ).toEqual(1);
-        expect( tournament.matches[1].nextMatch.round ).toEqual(2);
+        var leftMatch = tournament.matches[0];
+        var rightMatch = tournament.matches[1];
+
+        expect( leftMatch.round ).toEqual(1);
+        expect( leftMatch.nextMatch.round ).toEqual(2);
+
+        expect( rightMatch.round ).toEqual(1);
+        expect( rightMatch.nextMatch.round ).toEqual(2);
     });
 
     it('should have a final match between Spiderman and Batman if The Thing is defeated during first round', function() {
