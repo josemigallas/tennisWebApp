@@ -1,6 +1,7 @@
 import bootstrap from "bootstrap";
 import $ from "jquery";
 import {Tournament} from "../tournament/tournament";
+import {Player} from "../tournament/player";
 import * as tournamentProgress from "./tournamentProgress";
 import * as tournamentAlerts from "./tournamentAlerts";
 
@@ -12,7 +13,7 @@ export function init() {
 }
 
 function addPlayerIfValid() {
-    var player = getPlayerDataFromForms();
+    var player = getPlayerFromForms();
     var validationResult = tournament.validatePlayer(player);
 
     if (validationResult.success) {
@@ -22,11 +23,11 @@ function addPlayerIfValid() {
     }
 }
 
-function getPlayerDataFromForms() {
-    return {
-        name: $("#fieldName").val(),
-        rank: $("#fieldRank").val()
-    };
+function getPlayerFromForms() {
+    return new Player(
+        $("#fieldName").val(),
+        $("#fieldRank").val()
+    );
 }
 
 function addPlayerAndRefreshTable(player) {
