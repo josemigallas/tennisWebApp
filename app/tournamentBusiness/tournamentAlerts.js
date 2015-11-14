@@ -33,7 +33,7 @@ export function showWinner(player) {
     )
 }
 
-export default function showCustomAlert(title, msg) {
+export function showCustomAlert(title, msg) {
     $("#alertTitle").empty();
     $("#alertMessage").empty();
 
