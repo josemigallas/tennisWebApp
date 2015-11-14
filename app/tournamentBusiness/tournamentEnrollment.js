@@ -3,7 +3,7 @@ import $ from "jquery";
 import {Tournament} from "../tournament/tournament";
 import {Player} from "../tournament/player";
 import * as tournamentProgress from "./tournamentProgress";
-import * as tournamentAlerts from "./tournamentAlerts";
+import * as tournamentNotifier from "./tournamentNotifier";
 
 var tournament = new Tournament();
 
@@ -19,7 +19,7 @@ function addPlayerIfValid() {
     if (validationResult.success) {
         addPlayerAndRefreshTable(player);
     } else {
-        tournamentAlerts.showValidationError(validationResult);
+        tournamentNotifier.showValidationError(validationResult);
     }
 }
 
@@ -61,7 +61,7 @@ function generateTournament() {
         tournamentProgress.init(tournament);
 
     } else {
-        tournamentAlerts.showNotEnoughPlayers();
+        tournamentNotifier.showNotEnoughPlayers();
     }
 }
 
