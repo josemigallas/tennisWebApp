@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>tennisWebApp</title>
+    <link href="../jspm_packages/github/twbs/bootstrap@3.3.5/css/bootstrap.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+    <!-- header -->
+    <header>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid hidden-xs">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="">
+                        <img alt="Brand" class="logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Tennis_ball_3.svg/480px-Tennis_ball_3.svg.png">
+                    </a>
+                </div>
+                <h1>tennisWebApp<small> Empowered Gromenawer Achipriklander</small></h1>
+            </div>
+            <div class="container-fluid hidden-sm hidden-md hidden-lg">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="">
+                        <img alt="Brand" class="logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Tennis_ball_3.svg/480px-Tennis_ball_3.svg.png">
+                    </a>
+                    <h1>tennisWebApp</h1>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <!-- /header -->
+
+    <div class="container-fluid">
+
+        <!-- registration table -->
+        <div class="col-md-offset-2 col-md-8 col-lg-offset-0 col-lg-4">
+
+            <!-- new player row -->
+            <div class="row collapse in" id="newPlayerRowContainer">
+                <div class="col-xs-12 col-sm-6 col-lg-7 panel-custom">
+                    <input type="text" class="form-control" placeholder="Player Name" id="fieldName">
+                </div>
+                <div class="col-xs-5 col-sm-3 col-lg-3 panel-custom">
+                    <input type="number" class="form-control" placeholder="Rank" min="0" id="fieldRank">
+                </div>
+                <div class="col-xs-offset-4 col-xs-3 col-sm-offset-0 col-sm-3 col-lg-2 panel-custom">
+                    <button class="btn btn-default" type="button" id="buttonAdd" style="width: 100%">Add</button>
+                </div>
+            </div>
+
+            <!-- player list row -->
+            <div class="row">
+                <!-- <div class="container-fluid"> -->
+                <div class="col-xs-12">
+
+                    <!-- panel -->
+                    <div class="panel panel-default">
+
+                        <!-- panel heading -->
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Player list</h3>
+                        </div>
+
+                        <!-- panel body -->
+                        <div class="panel-body">
+
+                            <!-- panel body table -->
+                            <table class="table table-hover">
+                                <thead>
+                                    <th>Name</th>
+                                    <th>Rank</th>
+                                </thead>
+                                <tbody id=playerListBody></tbody>
+                            </table>
+                            <!-- /panel body table -->
+                        </div>
+                    </div>
+                    <!-- /panel -->
+
+                </div>
+            </div>
+            <!-- /player list row -->
+
+            <!-- button row -->
+            <div class="row collapse in" id="buttonCreateContainer">
+                <div class="col-sm-offset-6 col-sm-6">
+                    <div class="panel-custom">
+                        <button class="btn btn-default btn-expand" type="button" id="buttonCreate">Create tournament</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /registration table -->
+
+        <!-- tournament bracket -->
+        <div class="col-md-12 col-lg-8">
+            <div class="panel panel-default panel-bracket">
+                <div class="row" id="tournamentBracket">
+
+                </div>
+            </div>
+        </div>
+        <!-- /tournament bracket -->
+    </div>
+
+    <!-- Small modal -->
+    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" id="alertModal">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="alertTitle"></h4>
+                </div>
+                <div class="modal-body">
+                    <p id="alertMessage"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-expand" data-dismiss="modal">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="jspm_packages/system.js"></script>
+    <script src="config.js"></script>
+    <script>System.import('app/app.js');</script>
+
+</body>
+</html>

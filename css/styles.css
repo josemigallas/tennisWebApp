@@ -1,0 +1,59 @@
+.logo {
+    width: auto;
+    height: 50px;
+}
+
+.navbar-brand {
+    height: 100%;
+}
+
+.btn {
+    padding: 6px 0px;
+}
+
+.btn-expand {
+    width: 100%;
+}
+
+.panel-custom {
+    margin-bottom: 20px;
+    background-color: #fff;
+    border-radius: 4px;
+}
+
+.panel-body {
+    padding: 0 7px;
+}
+
+.panel-bracket {
+    padding: 0 25px 0 15px;
+}
+
+.box-bracket {
+    padding: 5px;
+    margin: 10px 0 10px 10px;
+    height: 50px;
+    overflow: auto;
+}
+
+.box-bracket-ghost-med {
+    height: 20px;
+    padding: 5px;
+    margin: 10px;
+    border: none;
+    box-shadow: none;
+}
+
+.box-bracket-ghost {
+    height: 50px;
+    padding: 5px;
+    margin: 10px;
+    border: none;
+    box-shadow: none;
+}
+
+.table thead > tr > th,
+.table tbody > tr > th,
+.table tbody > tr > td {
+    border: none;
+}
